@@ -1,12 +1,20 @@
-import telebot
+import requests
+from flask import Flask, jsonify, request
+import json
 
-bot = telebot.TeleBot("5670463206:AAEoQE14qn2_TqV0qmyyRK5kgDv-BJmDxto")
-@bot.message_handler(commands=["help","start"])
+TOKEN = "5670463206:AAEoQE14qn2_TqV0qmyyRK5kgDv-BJmDxto"
 
+app = Flask(__name__)
 
-def numeros(message):
-    bot.reply_to(message, "Hola,como estas?")
-    for i in range(10):
-        bot.reply_to(message, i)
+@app.route("/", methods = ["GET","POST"])
 
-bot.polling()
+def hello_word():
+    if request.method == "POST":
+        data = request.get_json()
+        print(f"DATA: {data}")
+        return {'satatusCode':200, 'body':'Success', 'data':data}
+    else:
+        return {'satatusCode':200, 'body':'Success'}
+
+if __name__ == "__main__":
+    app.run(debug=True)
