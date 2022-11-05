@@ -24,9 +24,9 @@ def welcome_message(item):
 
 def create_user(item):
     if item["text"].lower() == "create user":
-        user_id = item["from"]["id"]
-        username = item["from"]["first_name"]
-        chat_id = item["chat"]["id"]
+        user_id = int(item["from"]["id"])
+        username = str(item["from"]["first_name"])
+        chat_id = int(item["chat"]["id"])
         msg = ""
         if api.create_user(user_id, username, chat_id):     
             msg = f"Usuario {username} creado con exito, bienvenid@!"
