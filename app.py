@@ -41,15 +41,20 @@ def set_numbers(item):
     chat_id = item["chat"]["id"]
     try:
         if sets[0].lower() == "numbers" and int(sets[1]) > 0 and int(sets[2]) > 0:
-            msg = f"Welcome to de game Numbers >>> max = {sets[1]} intentos = {sets[2]}"
-            user_id = item["from"]["id"]
-            username = item["from"]["first_name"]
-            final_msg = f'{msg}'
-
-            to_url = f'https://api.telegram.org/bot{TOKEN}/sendMessage?chat_id={chat_id}&text={final_msg}&parse_mode=HTML'
+            game = api.create_number_game(chat_id, int(sets[1]), int(sets[2]))
+            msg = ""
+            if game == 1:
+                msg = f"Juego Numbers iniciado >>> max = {sets[1]} intentos = {sets[2]}."
+            elif game == 2:
+                msg = "Ya existe un juego activo."
+            elif game == 4:
+                msg = "Error en cambio a los turnos."
+            else:
+                msg = "Error al crear un juego."
+            to_url = f'https://api.telegram.org/bot{TOKEN}/sendMessage?chat_id={chat_id}&text={msg}&parse_mode=HTML'
             resp = requests.get(to_url)
     except:
-        final_msg = f'Sintax error to set numbers'
+        final_msg = f'Error de sintaxis para creación de juego.'
         to_url = f'https://api.telegram.org/bot{TOKEN}/sendMessage?chat_id={chat_id}&text={final_msg}&parse_mode=HTML'
         resp = requests.get(to_url)
 
