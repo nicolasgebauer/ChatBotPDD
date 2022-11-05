@@ -8,7 +8,7 @@ def create_user(tel_id, username, lobby_id):
     data = {"username": username, "telegram_id": tel_id, "lobby": lobby_id, "won_number": 0, "won_trivia": 0, "won_third": 0, "number_tries": 0}
     data_check = {"tel_id": tel_id, "lobby_id": lobby_id}
     users = requests.get(f'{api_url}user_created/', data_check)
-    print("Usuarios:", users.content)
+    print("Usuarios:", list(users.content))
     if len(list(users.content)) > 0:
         return 2 ## ya existe
     response = requests.post(f'{api_url}users/', json=data)
@@ -22,7 +22,7 @@ def create_number_game(lobby_id, max_number, tries):
     data = {"lobby": lobby_id, "number": rand_number, "status": 0}
     data_check = {"lobby_id": lobby_id}
     active_games = requests.get(f'{api_url}gamenumber_active/', data_check)
-    print("Activos:", active_games.content)
+    print("Activos:", list(active_games.content))
     if len(list(active_games.content)) > 0:
         return 2 ## ya existe
     response = requests.post(f'{api_url}game_numbers/', json=data)
