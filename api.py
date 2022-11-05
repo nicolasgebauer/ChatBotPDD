@@ -36,7 +36,7 @@ def create_number_game(lobby_id, max_number, tries):
 
 def set_user_tries(lobby_id, tries):
     data = {'lobby_id': lobby_id, 'tries': tries}
-    response = requests.post(f'{api_url}set_users_number_tries/', data)
+    response = requests.post(f'{api_url}set_users_number_tries/', form=data)
     print("CAMBIO DE INTENTOS TODOS LOS USUARIOS:", response.content)
     if response.status_code == 200:
         return True
