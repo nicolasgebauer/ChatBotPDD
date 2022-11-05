@@ -19,6 +19,8 @@ def create_user(tel_id, username, lobby_id):
 
 def create_number_game(lobby_id, max_number, tries):
     rand_number = random.randint(1, max_number)
+    print("numero maximo:", max_number)
+    print("intentos", tries)
     data = {"lobby": lobby_id, "number": rand_number, "status": 0}
     data_check = {"lobby_id": lobby_id}
     active_games = requests.get(f'{api_url}gamenumber_active/', data_check)
