@@ -10,8 +10,6 @@ app = Flask(__name__)
 
 
 def welcome_message(item):
-    print(item)
-
     if item["text"].lower() == "hi":
         msg = "hello"
         chat_id = item["chat"]["id"]
@@ -39,7 +37,6 @@ def create_user(item):
         resp = requests.get(to_url)
 
 def set_numbers(item):
-    print(item)
     sets = item["text"].split()
     chat_id = item["chat"]["id"]
     try:
@@ -63,6 +60,7 @@ def hello_word():
         print(f'DATA: {data}')
         if "message" in data:
             data = data["message"]
+            print(data)
             welcome_message(data)
             set_numbers(data)
             create_user(data)
