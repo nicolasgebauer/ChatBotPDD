@@ -28,10 +28,13 @@ def create_user(item):
         username = str(item["from"]["first_name"])
         chat_id = int(item["chat"]["id"])
         msg = ""
-        if api.create_user(user_id, username, chat_id):     
+        user = api.create_user(user_id, username, chat_id)
+        if  user == 1:     
             msg = f"Usuario {username} creado con exito, bienvenid@!"
+        elif user == 2:
+            msg = f"Usuario {username} ya existe."
         else:
-            msg = f"Error al crear usuario"
+            msg = f"Error al crear usuario."
         to_url = f'https://api.telegram.org/bot{TOKEN}/sendMessage?chat_id={chat_id}&text={msg}&parse_mode=HTML'
         resp = requests.get(to_url)
 
