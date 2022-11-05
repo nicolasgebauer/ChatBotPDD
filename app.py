@@ -35,6 +35,7 @@ def set_numbers(item):
             to_url = f'https://api.telegram.org/bot{TOKEN}/sendMessage?chat_id={chat_id}&text={final_msg}&parse_mode=HTML'
             resp = requests.get(to_url)
     except:
+        chat_id = item["chat"]["id"]
         final_msg = f'Sintax error to set numbers'
         to_url = f'https://api.telegram.org/bot{TOKEN}/sendMessage?chat_id={chat_id}&text={final_msg}&parse_mode=HTML'
         resp = requests.get(to_url)
