@@ -3,7 +3,7 @@ from flask import Flask, jsonify, request
 import json
 
 TOKEN = '5670463206:AAEoQE14qn2_TqV0qmyyRK5kgDv-BJmDxto'
-
+# https://api.telegram.org/bot5670463206:AAEoQE14qn2_TqV0qmyyRK5kgDv-BJmDxto/setWebhook?url=https://pdd-games.herokuapp.com
 app = Flask(__name__)
 
 
@@ -12,12 +12,12 @@ def welcome_message(item):
 
     if item["text"].lower() == "hi":
         msg = "hello"
-        chat_id = item['chat']['id']
+        chat_id = item["chat"]["id"]
         user_id = item["from"]["id"]
-        username = item['from']["username"]
+        username = item["from"]["username"]
         welcome_msg = f'{msg} {username}'
 
-        to_url = f"https://api.telegram.org/bot{TOKEN}/sendMessage?chat_id={chat_id}&text={welcome_msg}&parse_mode=HTML"
+        to_url = f'https://api.telegram.org/bot{TOKEN}/sendMessage?chat_id={chat_id}&text={welcome_msg}&parse_mode=HTML'
         resp = requests.get(to_url)
 
 
