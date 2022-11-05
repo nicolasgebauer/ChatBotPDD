@@ -10,9 +10,9 @@ def create_user(tel_id, username, lobby_id):
     print("Usuarios:", usuarios.content)
     if len(list(usuarios.content)) > 0:
         return 2 ## ya existe
-    #response = requests.post(f'{api_url}users/', json=data)
-    #print(response.content)
-    #if response.status_code == 200:
-    #    print(response.content)
-    #    return 1
+    response = requests.post(f'{api_url}users/', json=data)
+    print(response.content)
+    if response.status_code == 200:
+        print(response.content)
+        return 1
     return 3  ## error server
