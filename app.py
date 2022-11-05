@@ -14,7 +14,7 @@ def welcome_message(item):
         msg = "hello"
         chat_id = item["chat"]["id"]
         user_id = item["from"]["id"]
-        username = item["from"]["username"]
+        username = item["from"]["first_name"]
         welcome_msg = f'{msg} {username}'
 
         to_url = f'https://api.telegram.org/bot{TOKEN}/sendMessage?chat_id={chat_id}&text={welcome_msg}&parse_mode=HTML'
