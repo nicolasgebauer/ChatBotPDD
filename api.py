@@ -22,7 +22,7 @@ def create_number_game(lobby_id, max_number, tries):
     data = {"lobby": lobby_id, "number": rand_number, "status": 0}
     data_check = {"lobby_id": lobby_id}
     active_games = requests.get(f'{api_url}gamenumber_active/', data_check)
-    print("Activos:", active_games.json())
+    print("Activos:", list(active_games.json()))
     if len(list(active_games.json())) > 0:
         return 2 ## ya existe
     response = requests.post(f'{api_url}game_numbers/', json=data)
