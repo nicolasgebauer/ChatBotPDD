@@ -8,7 +8,7 @@ def create_user(tel_id, username, lobby_id):
     data_check = {"tel_id": tel_id, "lobby_id": lobby_id}
     usuarios = requests.get(f'{api_url}user_created/', data_check)
     print("Usuarios:", usuarios.content)
-    if len(usuarios) > 0:
+    if len(list(usuarios.content)) > 0:
         return 2 ## ya existe
     #response = requests.post(f'{api_url}users/', json=data)
     #print(response.content)
