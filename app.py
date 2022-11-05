@@ -23,8 +23,9 @@ def welcome_message(item):
 
 def set_numbers(item):
     print(item)
-    if item["text"].lower() == "numbers":
-        msg = "Welcomme to de game Numbers"
+    sets = item["text"].split()
+    if sets[0].lower() == "numbers" and int(sets[1]) > 0 and int(sets[2]) > 0:
+        msg = f"Welcome to de game Numbers >>> max = {sets[1]} intentos = {sets[2]}"
         chat_id = item["chat"]["id"]
         user_id = item["from"]["id"]
         username = item["from"]["first_name"]
