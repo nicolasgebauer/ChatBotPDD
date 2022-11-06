@@ -36,13 +36,17 @@ def create_number_game(lobby_id, max_number, tries):
         return 1
     return 3
 
-def guess_number(lobby_id, guess, user_id):
+def guess_number(lobby_id, guess, tel_id):
     data_check = {"lobby_id": lobby_id}
     active_games = requests.get(f'{api_url}gamenumber_active/', data_check)
     game = list(active_games.json())
+    data_check = {"tel_id": tel_id, "lobby_id": lobby_id}
+    users = requests.get(f'{api_url}user_created/', data_check)
+    user = list(users.json())[0]
     if len(game) > 0:
         print("guess:", guess)
         print("game:", game)
+        print("user:", user)
         number = game[0]["number"]
         print("number:",number)
         if guess < number:
