@@ -2,15 +2,11 @@ import requests
 from flask import Flask, jsonify, request
 import json
 import api
-#import telebot
 
 TOKEN = '5670463206:AAEoQE14qn2_TqV0qmyyRK5kgDv-BJmDxto'
 api_url = 'https://apipds4.herokuapp.com/'
 # https://api.telegram.org/bot5670463206:AAEoQE14qn2_TqV0qmyyRK5kgDv-BJmDxto/setWebhook?url=https://pdd-games.herokuapp.com
 app = Flask(__name__)
-
-#bot = telebot.TeleBot(TOKEN)
-#@bot.message_handler(commands=["help","start"])
 
 def welcome_message(item):
     if item["text"].lower() == "hi":
@@ -25,9 +21,9 @@ def welcome_message(item):
 
 def create_user(item):
     if item["text"].lower() == "create user":
-        user_id = int(item["from"]["id"])
+        user_id = str(item["from"]["id"])
         username = str(item["from"]["first_name"])
-        chat_id = int(item["chat"]["id"])
+        chat_id = str(item["chat"]["id"])
         msg = ""
         user = api.create_user(user_id, username, chat_id)
         if  user == 1:     
@@ -69,8 +65,8 @@ def set_numbers(item):
 
 def set_guess(item):
     sets = str(item["text"])
-    chat_id = item["chat"]["id"]
-    user_id = int(item["from"]["id"])
+    chat_id = str(item["chat"]["id"])
+    user_id = str(item["from"]["id"])
     username = item["from"]["first_name"]
     error = False
     msg_error = ""
