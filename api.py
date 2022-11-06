@@ -43,7 +43,8 @@ def guess_number(lobby_id, guess, user_id):
     if len(game) > 0:
         print("guess:", guess)
         print("game:", game)
-        number = game["number"]
+        number = game[0]["number"]
+        print("number:",number)
         if guess < 1:
             return 2
         elif guess > 1:
