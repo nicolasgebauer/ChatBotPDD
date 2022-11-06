@@ -55,7 +55,7 @@ def guess_number(lobby_id, guess, tel_id):
             return 3
         else:
             data = {"status":1}
-            response = requests.put(f'{api_url}game_numbers/{game[0]["id"]}/', params=data)
+            response = requests.put(f'{api_url}game_numbers/{game[0]["id"]}/', json=data)
             print("CAMBIO DE STATUS:", response.content)
             if response.status_code == 200:
                 return 1
