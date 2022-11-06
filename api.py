@@ -42,7 +42,7 @@ def guess_number(lobby_id, guess, tel_id):
     game = list(active_games.json())
     data_check = {"tel_id": tel_id, "lobby_id": lobby_id}
     users = requests.get(f'{api_url}user_created/', data_check)
-    user = list(users.json())[0]
+    user = list(users.json())
     if len(game) > 0:
         print("guess:", guess)
         print("game:", game)
