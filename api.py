@@ -88,6 +88,7 @@ def tries_down(lobby_id, tel_id):
     "won_trivia": user["won_trivia"],
     "won_third": user["won_third"],
     "number_tries": (user["number_tries"]-1) }
+    print("USER DATA:",data)
     response = requests.put(f'{api_url}game_numbers/{user_id}/', json=data)
     print("RESTA DE INTENTOS:", response.content)
     if response.status_code == 200:
