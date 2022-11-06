@@ -30,9 +30,9 @@ def create_number_game(lobby_id, max_number, tries):
     response = requests.post(f'{api_url}game_numbers/', json=data)
     print("CREACION DE JUEGO:", response.content)
     if response.status_code == 200:
-        #user_tries = set_user_tries(lobby_id, tries)
-        #if not user_tries:
-           # return 4
+        user_tries = set_user_tries(lobby_id, tries)
+        if not user_tries:
+            return 4
         return 1
     return 3
 
@@ -50,9 +50,7 @@ def guess_number(lobby_id, guess, user_id):
         elif guess > number:
             return 3
         else:
-
             return 1
-
     else:
         return -1
     
