@@ -9,13 +9,8 @@ api_url = 'https://apipds4.herokuapp.com/'
 # https://api.telegram.org/bot5670463206:AAEoQE14qn2_TqV0qmyyRK5kgDv-BJmDxto/setWebhook?url=https://pdd-games.herokuapp.com
 app = Flask(__name__)
 
-bot = telebot.TeleBot(TOKEN)
-@bot.message_handler(commands=["help","start"])
-
-def numeros(message):
-    bot.reply_to(message, "Bienvenid@")
-bot.polling()
-
+#bot = telebot.TeleBot(TOKEN)
+#@bot.message_handler(commands=["help","start"])
 
 def welcome_message(item):
     if item["text"].lower() == "hi":
