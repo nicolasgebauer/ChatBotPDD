@@ -6,6 +6,7 @@ import api
 TOKEN = '5716588187:AAH_kxlWI2GGSbmHEAANh53CGgvOfkBfNWM'
 api_url = 'https://apipds4.herokuapp.com/'
 # https://api.telegram.org/bot5670463206:AAEoQE14qn2_TqV0qmyyRK5kgDv-BJmDxto/setWebhook?url=https://pdd-games.herokuapp.com
+# https://api.telegram.org/bot5716588187:AAH_kxlWI2GGSbmHEAANh53CGgvOfkBfNWM/setWebhook?url=https://pdd-games.herokuapp.com
 app = Flask(__name__)
 
 def welcome_message(item):
