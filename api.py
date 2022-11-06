@@ -36,17 +36,13 @@ def create_number_game(lobby_id, max_number, tries):
         return 1
     return 3
 
-def guess_number(lobby_id, guess, tel_id):
+def guess_number(lobby_id, guess):
     data_check = {"lobby_id": lobby_id}
     active_games = requests.get(f'{api_url}gamenumber_active/', data_check)
     game = list(active_games.json())
-    data_check = {"tel_id": tel_id, "lobby_id": lobby_id}
-    users = requests.get(f'{api_url}user_created/', data_check)
-    user = list(users.json())[0]
     if len(game) > 0:
         print("guess:", guess)
         print("game:", game)
-        print("user:", user)
         number = game[0]["number"]
         print("number:",number)
         if guess < number:
@@ -78,3 +74,22 @@ def get_game_numbers_activate(lobby_id):
     if len(game) > 0:
         return True
     return False
+
+def tries_down(lobby_id, tel_id):
+    data_check = {"tel_id": tel_id, "lobby_id": lobby_id}
+    users = requests.get(f'{api_url}user_created/', data_check)
+    user = list(users.json())[0]
+    user_id = user["id"]
+    data = {"number_tries": (user["number_tries"]-1) }
+    response = requests.put(f'{api_url}game_numbers/{user_id}/', json=data)
+    print("RESTA DE INTENTOS:", response.content)
+    if response.status_code == 200:
+        return True
+    return False
+
+def user_numbers_tries(lobby_id, tel_id):
+    data_check = {"tel_id": tel_id, "lobby_id": lobby_id}
+    users = requests.get(f'{api_url}user_created/', data_check)
+    user = list(users.json())[0]
+    return user["number_tries"]
+    
