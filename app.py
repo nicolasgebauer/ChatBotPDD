@@ -38,7 +38,8 @@ def create_user(item):
 
 def is_game_numbers_active(item):
     chat_id = item["chat"]["id"]
-    return api.get_game_numbers_activate(chat_id)
+    if api.get_game_numbers_activate(chat_id):
+        return set_guess(item)
 
 
 def set_numbers(item):
@@ -104,8 +105,7 @@ def hello_word():
             print(data)
             welcome_message(data)
             set_numbers(data)
-            if is_game_numbers_active(data):
-                set_guess(data)
+            is_game_numbers_active(data)
             create_user(data)
             return {"statusCode": 200, "body": "Success", "data": data}
         else:        
