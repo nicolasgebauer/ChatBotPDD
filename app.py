@@ -69,42 +69,72 @@ def set_guess(item):
     chat_id = item["chat"]["id"]
     user_id = int(item["from"]["id"])
     username = item["from"]["first_name"]
+    error = False
     try:
         if sets.isnumeric() and api.user_numbers_tries(chat_id,user_id) > 0:
             game = api.guess_number(chat_id, int(sets))
             msg = ""
             if game == 1:
                 if api.won_number_games(chat_id, user_id):
-                    msg = f"Correcto el numero es {sets}."
-                    msg1 = f"Felicitaciones {username} eres el ganador."
-                    msg2 = "Juego finalizado."
+                    msg_correct_number_guessed = f"Correcto el numero es {sets}."
+                    to_url = f'https://api.telegram.org/bot{TOKEN}/sendMessage?chat_id={chat_id}&text={msg_correct_number_guessed}&parse_mode=HTML'
+                    resp = requests.get(to_url)
+                    msg_congratulations_message = f"Felicitaciones {username} eres el ganador."
+                    to_url = f'https://api.telegram.org/bot{TOKEN}/sendMessage?chat_id={chat_id}&text={msg_congratulations_message}&parse_mode=HTML'
+                    resp = requests.get(to_url)
+                    msg_end_game = "Juego finalizado."
+                    to_url = f'https://api.telegram.org/bot{TOKEN}/sendMessage?chat_id={chat_id}&text={msg_end_game}&parse_mode=HTML'
+                    resp = requests.get(to_url)
                 else:
-                    msg = "Error al subir los juegos numbers ganados."
+                    msg_error = "Error al subir los juegos numbers ganados."
+                    error = True
             elif game == 2:
                 if api.tries_down(chat_id,user_id):
                     tries = api.user_numbers_tries(chat_id,user_id)
-                    msg = f"El numero es mayor a {sets}."
-                    msg1 = f"{username} te quedan {tries} intentos."
-                    api.check_total_tries(chat_id)
+                    msg_upper_number_guess = f"El numero es mayor a {sets}."
+                    to_url = f'https://api.telegram.org/bot{TOKEN}/sendMessage?chat_id={chat_id}&text={msg_upper_number_guess}&parse_mode=HTML'
+                    resp = requests.get(to_url)
+                    msg_rest_tries = f"{username} te quedan {tries} intentos."
+                    to_url = f'https://api.telegram.org/bot{TOKEN}/sendMessage?chat_id={chat_id}&text={msg_rest_tries}&parse_mode=HTML'
+                    resp = requests.get(to_url)
+                    if not api.check_total_tries(chat_id):
+                        if api.end_game_numbers(chat_id):
+                            msg_game_losers = f"Juego terminado, ya no quedan más intentos."
+                            to_url = f'https://api.telegram.org/bot{TOKEN}/sendMessage?chat_id={chat_id}&text={msg_game_losers}&parse_mode=HTML'
+                            resp = requests.get(to_url)
+                        else:
+                            msg_error = "Error al terminar juego"
+                            error = True
                 else:
-                    msg = "Error al bajar los intentos"
+                    msg_error = "Error al bajar los intentos"
+                    error = True
             elif game == 3:
                 if api.tries_down(chat_id,user_id):
                     tries = api.user_numbers_tries(chat_id,user_id)
-                    msg = f"El numero es menor a {sets}."
-                    msg1 = f"{username} te quedan {tries} intentos."
-                    api.check_total_tries(chat_id)
+                    msg_lower_number_guess = f"El numero es menor a {sets}."
+                    to_url = f'https://api.telegram.org/bot{TOKEN}/sendMessage?chat_id={chat_id}&text={msg_lower_number_guess}&parse_mode=HTML'
+                    resp = requests.get(to_url)
+                    msg_rest_tries = f"{username} te quedan {tries} intentos."
+                    to_url = f'https://api.telegram.org/bot{TOKEN}/sendMessage?chat_id={chat_id}&text={msg_rest_tries}&parse_mode=HTML'
+                    resp = requests.get(to_url)                                        
+                    if not api.check_total_tries(chat_id):
+                        if api.end_game_numbers(chat_id):
+                            msg_game_losers = f"Juego terminado, ya no quedan más intentos."
+                            to_url = f'https://api.telegram.org/bot{TOKEN}/sendMessage?chat_id={chat_id}&text={msg_game_losers}&parse_mode=HTML'
+                            resp = requests.get(to_url)
+                        else:
+                            msg_error = "Error al terminar juego"
+                            error = True
                 else:
-                    msg = "Error al bajar los intentos"
+                    msg_error = "Error al bajar los intentos"
+                    error = True
             else:
-                msg = "Error al intentar jugada un juego."
-            to_url = f'https://api.telegram.org/bot{TOKEN}/sendMessage?chat_id={chat_id}&text={msg}&parse_mode=HTML'
-            resp = requests.get(to_url)
-            to_url = f'https://api.telegram.org/bot{TOKEN}/sendMessage?chat_id={chat_id}&text={msg1}&parse_mode=HTML'
-            resp = requests.get(to_url)
-            if game == 1:
-                to_url = f'https://api.telegram.org/bot{TOKEN}/sendMessage?chat_id={chat_id}&text={msg2}&parse_mode=HTML'
+                msg_error = "Error al intentar jugada un juego."
+                error = True
+            if error:
+                to_url = f'https://api.telegram.org/bot{TOKEN}/sendMessage?chat_id={chat_id}&text={msg_error}&parse_mode=HTML'
                 resp = requests.get(to_url)
+                
     except:
         final_msg = f'Error de sintaxis en jugada.'
         to_url = f'https://api.telegram.org/bot{TOKEN}/sendMessage?chat_id={chat_id}&text={final_msg}&parse_mode=HTML'
