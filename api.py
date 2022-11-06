@@ -101,3 +101,38 @@ def user_numbers_tries(lobby_id, tel_id):
     user = list(users.json())[0]
     return user["number_tries"]
     
+def won_number_games(lobby_id, tel_id):
+    data_check = {"tel_id": tel_id, "lobby_id": lobby_id}
+    users = requests.get(f'{api_url}user_created/', data_check)
+    user = list(users.json())[0]
+    print("USER:",user)
+    user_id = user["id"]
+    data = {"username": user["username"],
+    "telegram_id": user["telegram_id"],
+    "lobby": user["lobby"],
+    "won_number": user["won_number"]+1,
+    "won_trivia": user["won_trivia"],
+    "won_third": user["won_third"],
+    "number_tries": user["number_tries"] }
+    print("USER DATA:",data)
+    response = requests.put(f'{api_url}users/{user_id}/', json=data)
+    print("RESTA DE INTENTOS:", response.content)
+    if response.status_code == 200:
+        return True
+    return False
+
+def check_total_tries(lobby_id):
+    data_check = {"lobby_id": lobby_id}
+    total = requests.get(f'{api_url}get_tries_per_lobby/', data_check)
+    print("INTENTOS TOTALES:", total)
+
+def end_game_numbers(lobby_id):
+    data_check = {"lobby_id": lobby_id}
+    active_games = requests.get(f'{api_url}gamenumber_active/', data_check)
+    game = list(active_games.json())    
+    data = {"lobby":game[0]["lobby"], "number":game[0]["number"], "status":1}
+    response = requests.put(f'{api_url}game_numbers/{game[0]["id"]}/', json=data)
+    print("CAMBIO DE STATUS:", response.content)
+    if response.status_code == 200:
+        return True
+    return False

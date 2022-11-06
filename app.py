@@ -74,14 +74,18 @@ def set_guess(item):
             game = api.guess_number(chat_id, int(sets))
             msg = ""
             if game == 1:
-                msg = f"Correcto el numero es {sets}."
-                msg1 = f"Felicitaciones {username} eres el ganador."
-                msg2 = "Juego finalizado."
+                if api.won_number_games(chat_id, user_id):
+                    msg = f"Correcto el numero es {sets}."
+                    msg1 = f"Felicitaciones {username} eres el ganador."
+                    msg2 = "Juego finalizado."
+                else:
+                    msg = "Error al subir los juegos numbers ganados."
             elif game == 2:
                 if api.tries_down(chat_id,user_id):
                     tries = api.user_numbers_tries(chat_id,user_id)
                     msg = f"El numero es mayor a {sets}."
                     msg1 = f"{username} te quedan {tries} intentos."
+                    api.check_total_tries(chat_id)
                 else:
                     msg = "Error al bajar los intentos"
             elif game == 3:
@@ -89,6 +93,7 @@ def set_guess(item):
                     tries = api.user_numbers_tries(chat_id,user_id)
                     msg = f"El numero es menor a {sets}."
                     msg1 = f"{username} te quedan {tries} intentos."
+                    api.check_total_tries(chat_id)
                 else:
                     msg = "Error al bajar los intentos"
             else:
