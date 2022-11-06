@@ -62,20 +62,28 @@ def set_guess(item):
     sets = str(item["text"])
     chat_id = item["chat"]["id"]
     user_id = int(item["from"]["id"])
+    username = item["from"]["first_name"]
     try:
         if sets.isnumeric():
             game = api.guess_number(chat_id, int(sets), user_id)
             msg = ""
             if game == 1:
-                msg = f"Correcto el numero es {sets}"
+                msg = f"Correcto el numero es {sets}."
+                msg1 = f"Felicitaciones {username} eres el ganador."
+                msg2 = "Juego finalizado."
             elif game == 2:
-                msg = f"El numero es mayor a {sets}"
+                msg = f"El numero es mayor a {sets}."
             elif game == 3:
-                msg = msg = f"El numero es menor a {sets}"
+                msg = msg = f"El numero es menor a {sets}."
             else:
                 msg = "Error al intentar jugada un juego."
             to_url = f'https://api.telegram.org/bot{TOKEN}/sendMessage?chat_id={chat_id}&text={msg}&parse_mode=HTML'
             resp = requests.get(to_url)
+            if game == 1:
+                to_url = f'https://api.telegram.org/bot{TOKEN}/sendMessage?chat_id={chat_id}&text={msg1}&parse_mode=HTML'
+                resp = requests.get(to_url)
+                to_url = f'https://api.telegram.org/bot{TOKEN}/sendMessage?chat_id={chat_id}&text={msg2}&parse_mode=HTML'
+                resp = requests.get(to_url)
     except:
         final_msg = f'Error de sintaxis en jugada.'
         to_url = f'https://api.telegram.org/bot{TOKEN}/sendMessage?chat_id={chat_id}&text={final_msg}&parse_mode=HTML'
