@@ -39,9 +39,10 @@ def create_number_game(lobby_id, max_number, tries):
 def guess_number(lobby_id, guess, user_id):
     data_check = {"lobby_id": lobby_id}
     active_games = requests.get(f'{api_url}gamenumber_active/', data_check)
-    game = list(active_games.json())[0]
-    if len(list(active_games.json())) > 0:
+    game = list(active_games.json())
+    if len(game) > 0:
         print("guess:", guess)
+        print("game:", game)
         number = game["number"]
         if guess < 1:
             return 2

@@ -62,8 +62,10 @@ def set_guess(item):
     sets = str(item["text"])
     chat_id = item["chat"]["id"]
     user_id = int(item["from"]["id"])
-    game = api.guess_number(chat_id, sets, user_id)
-    
+    try:
+        game = api.guess_number(chat_id, int(sets), user_id)
+    except:
+        pass
     # try:
     #     if sets.isnumeric():
     #         game = api.guess_number(chat_id, sets, user_id)
