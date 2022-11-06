@@ -79,9 +79,16 @@ def tries_down(lobby_id, tel_id):
     data_check = {"tel_id": tel_id, "lobby_id": lobby_id}
     users = requests.get(f'{api_url}user_created/', data_check)
     user = list(users.json())[0]
+    print("USER:",user)
     user_id = user["id"]
-    user["number_tries"] -= 1
-    response = requests.put(f'{api_url}game_numbers/{user_id}/', json=user)
+    data = {"username": user["username"],
+    "telegram_id": user["telegram_id"],
+    "lobby": user["lobby"],
+    "won_number": user["won_number"],
+    "won_trivia": user["won_trivia"],
+    "won_third": user["won_third"],
+    "number_tries": (user["number_tries"]-1) }
+    response = requests.put(f'{api_url}game_numbers/{user_id}/', json=data)
     print("RESTA DE INTENTOS:", response.content)
     if response.status_code == 200:
         return True
