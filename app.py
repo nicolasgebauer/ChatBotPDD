@@ -2,7 +2,7 @@ import requests
 from flask import Flask, jsonify, request
 import json
 import api
-import telebot
+#import telebot
 
 TOKEN = '5670463206:AAEoQE14qn2_TqV0qmyyRK5kgDv-BJmDxto'
 api_url = 'https://apipds4.herokuapp.com/'
