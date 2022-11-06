@@ -42,7 +42,7 @@ def guess_number(lobby_id, guess, tel_id):
     game = list(active_games.json())
     data_check = {"telegram_id": tel_id, "lobby_id": lobby_id}
     users = requests.get(f'{api_url}user_created/', data_check)
-    user = users.json()
+    user = list(users.json())[0]
     if len(game) > 0:
         print("guess:", guess)
         print("game:", game)
@@ -54,7 +54,12 @@ def guess_number(lobby_id, guess, tel_id):
         elif guess > number:
             return 3
         else:
-            return 1
+            data = {"status":1}
+            response = requests.put(f'{api_url}game_numbers/{game[0]["id"]}/', params=data)
+            print("CAMBIO DE STATUS:", response.content)
+            if response.status_code == 200:
+                return 1
+            return -1
     else:
         return -1
     
