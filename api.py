@@ -70,3 +70,11 @@ def set_user_tries(lobby_id, tries):
     if response.status_code == 200:
         return True
     return False
+
+def get_game_numbers_activate(lobby_id):
+    data_check = {"lobby_id": lobby_id}
+    active_games = requests.get(f'{api_url}gamenumber_active/', data_check)
+    game = list(active_games.json())
+    if len(game) > 0:
+        return True
+    return False

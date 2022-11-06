@@ -36,6 +36,11 @@ def create_user(item):
         to_url = f'https://api.telegram.org/bot{TOKEN}/sendMessage?chat_id={chat_id}&text={msg}&parse_mode=HTML'
         resp = requests.get(to_url)
 
+def is_game_numbers_active(item):
+    chat_id = item["chat"]["id"]
+    return api.get_game_numbers_activate(chat_id)
+
+
 def set_numbers(item):
     sets = item["text"].split()
     chat_id = item["chat"]["id"]
@@ -99,7 +104,8 @@ def hello_word():
             print(data)
             welcome_message(data)
             set_numbers(data)
-            set_guess(data)
+            if is_game_numbers_active(data):
+                set_guess(data)
             create_user(data)
             return {"statusCode": 200, "body": "Success", "data": data}
         else:        
