@@ -45,9 +45,9 @@ def guess_number(lobby_id, guess, user_id):
         print("game:", game)
         number = game[0]["number"]
         print("number:",number)
-        if guess < 1:
+        if guess < number:
             return 2
-        elif guess > 1:
+        elif guess > number:
             return 3
         else:
             return 1
