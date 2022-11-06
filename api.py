@@ -80,8 +80,8 @@ def tries_down(lobby_id, tel_id):
     users = requests.get(f'{api_url}user_created/', data_check)
     user = list(users.json())[0]
     user_id = user["id"]
-    data = {"number_tries": (user["number_tries"]-1) }
-    response = requests.put(f'{api_url}game_numbers/{user_id}/', json=data)
+    user["number_tries"] -= 1
+    response = requests.put(f'{api_url}game_numbers/{user_id}/', json=user)
     print("RESTA DE INTENTOS:", response.content)
     if response.status_code == 200:
         return True
