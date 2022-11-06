@@ -53,7 +53,7 @@ def guess_number(lobby_id, guess, user_id):
             return 3
         else:
             print("game id:",game_id)
-            data = {"lobby": game[0]["lobby"],"number": game[0]["number"],"status": 1}
+            data = {"lobby": int(game[0]["lobby"]),"number": int(game[0]["number"]),"status": 1}
             response = requests.post(f'{api_url}set_users_number_tries/{game_id}/', params=data)
             print("CAMBIO STATUS GAME:", response)
             
