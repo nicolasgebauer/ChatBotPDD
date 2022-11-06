@@ -124,7 +124,7 @@ def won_number_games(lobby_id, tel_id):
 def check_total_tries(lobby_id):
     data_check = {"lobby_id": lobby_id}
     total = requests.get(f'{api_url}get_tries_per_lobby/', data_check)
-    print("INTENTOS TOTALES:", total)
+    print("INTENTOS TOTALES:", total.json())
 
 def end_game_numbers(lobby_id):
     data_check = {"lobby_id": lobby_id}
