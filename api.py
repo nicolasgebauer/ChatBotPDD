@@ -66,5 +66,5 @@ def set_user_tries(lobby_id, tries):
     return False
 
 def rest_tries(user_id):
-    user = requests.get(f'{api_url}users/', user_id).json()
-    print("user:",user)
+    user = requests.get(f'{api_url}users/', user_id)
+    print("user:",user.json())
