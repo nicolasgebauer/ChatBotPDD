@@ -52,8 +52,8 @@ def guess_number(lobby_id, guess, user_id):
         elif guess > number:
             return 3
         else:
-            data = {"id": game_id,"status": 1}
-            response = requests.post(f'{api_url}set_users_number_tries/', params=data)
+            data = {"status": 1}
+            response = requests.post(f'{api_url}set_users_number_tries/{game_id}/', params=data)
             print("CAMBIO STATUS GAME:", response.content)
             if response.status_code == 200:
                 return 1
