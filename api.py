@@ -43,9 +43,9 @@ def guess_number(lobby_id, guess, user_id):
     if len(list(active_games.json())) > 0:
         print("guess:", guess)
         number = game["number"]
-        if guess < number:
+        if guess < 1:
             return 2
-        elif guess > number:
+        elif guess > 1:
             return 3
         else:
             return 1
