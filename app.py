@@ -70,6 +70,7 @@ def set_guess(item):
     user_id = int(item["from"]["id"])
     username = item["from"]["first_name"]
     error = False
+    msg_error = ""
     try:
         if sets.isnumeric() and api.user_numbers_tries(chat_id,user_id) > 0:
             game = api.guess_number(chat_id, int(sets))
@@ -131,9 +132,9 @@ def set_guess(item):
             else:
                 msg_error = "Error al intentar jugada un juego."
                 error = True
-            if error:
-                to_url = f'https://api.telegram.org/bot{TOKEN}/sendMessage?chat_id={chat_id}&text={msg_error}&parse_mode=HTML'
-                resp = requests.get(to_url)
+        if error:
+            to_url = f'https://api.telegram.org/bot{TOKEN}/sendMessage?chat_id={chat_id}&text={msg_error}&parse_mode=HTML'
+            resp = requests.get(to_url)
                 
     except:
         final_msg = f'Error de sintaxis en jugada.'
