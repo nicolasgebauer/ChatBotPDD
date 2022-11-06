@@ -152,15 +152,16 @@ def hello_word():
         if "message" in data:
             data = data["message"]
             print(data)
-            welcome_message(data)
-            set_numbers(data)
-            is_game_numbers_active(data)
-            create_user(data)
-            return {"statusCode": 200, "body": "Success", "data": data}
-        else:        
-            return {'satatusCode':404, 'body':'User has left the chatroom and deleted the chat', 'data':data}
-    else:
-        return {'satatusCode':200, 'body':'Success'}
+            if "text" in data:
+                welcome_message(data)
+                set_numbers(data)
+                is_game_numbers_active(data)
+                create_user(data)
+                return {"statusCode": 200, "body": "Success", "data": data}
+            else:        
+                return {'statusCode':404, 'body':'User has left the chatroom and deleted the chat', 'data':data}
+        else:
+            return {'statusCode':200, 'body':'Success'}
 
 if __name__ == '__main__':
     app.run(debug=True)
