@@ -144,10 +144,14 @@ def get_stats(lobby_id):
     data_check = {"lobby_id": lobby_id}
     response = requests.get(f'{api_url}get_stat_lobby/', data_check)
     print("ORDEN DE JUGADORES:", response.content)
+    in_order = ""
+    count = 0
     if response.status_code == 200:
         gamers = response.json()
-        print(gamers)
         for item in gamers:
-            print(item["username"], item["won_number"])
-        return True
+            if count == 0:
+                in_order += f"""{count+1}- {item["username"]}: {item["won_number"]} ganados"""
+            else:
+                f"""\n{count+1}- {item["username"]}: {item["won_number"]} ganados"""
+        return in_order
     return False

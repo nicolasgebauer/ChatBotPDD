@@ -147,7 +147,15 @@ def stats(item):
     chat_id = item["chat"]["id"]
     chat_id_str = str(chat_id)
     if item["text"].lower() == "stats":
-        api.get_stats(chat_id_str)
+        result = api.get_stats(chat_id_str)
+        if  result != False:
+            to_url = f'https://api.telegram.org/bot{TOKEN}/sendMessage?chat_id={chat_id}&text={result}&parse_mode=HTML'
+            resp = requests.get(to_url)
+        else:
+            msg = "Error al conseguir las estadísticas."
+            to_url = f'https://api.telegram.org/bot{TOKEN}/sendMessage?chat_id={chat_id}&text={msg}&parse_mode=HTML'
+            resp = requests.get(to_url)
+
 
 @app.route("/", methods = ['GET','POST'])
 def hello_word():
