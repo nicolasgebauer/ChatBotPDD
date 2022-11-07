@@ -137,7 +137,7 @@ def end_game_numbers(lobby_id):
     response = requests.put(f'{api_url}game_numbers/{game[0]["id"]}/', json=data)
     print("CAMBIO DE STATUS:", response.content)
     if response.status_code == 200:
-        return True
+        return game[0]["number"]
     return False
 
 def get_stats(lobby_id):
