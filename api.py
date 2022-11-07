@@ -139,3 +139,16 @@ def end_game_numbers(lobby_id):
     if response.status_code == 200:
         return True
     return False
+
+def get_stats(lobby_id):
+    data_check = {"lobby_id": lobby_id}
+    response = requests.get(f'{api_url}get_stat_lobby/', data_check)
+    print("ORDEN DE JUGADORES:", response.content)
+    if response.status_code == 200:
+        gamers = response.json()
+        print(gamers)
+        for item in gamers:
+            print(item["username"])
+            print(item("won_number"))
+        return True
+    return False

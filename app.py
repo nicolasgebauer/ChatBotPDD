@@ -42,7 +42,6 @@ def is_game_numbers_active(item):
     if api.get_game_numbers_activate(chat_id_str):
         set_guess(item)
 
-
 def set_numbers(item):
     sets = item["text"].split()
     chat_id = item["chat"]["id"]
@@ -143,6 +142,12 @@ def set_guess(item):
         final_msg = f'Error de sintaxis en jugada.'
         to_url = f'https://api.telegram.org/bot{TOKEN}/sendMessage?chat_id={chat_id}&text={final_msg}&parse_mode=HTML'
         resp = requests.get(to_url)
+
+def stats(item):
+    chat_id = item["chat"]["id"]
+    chat_id_str = str(chat_id)
+    if item["text"].lower() == "stats":
+        api.get_stats(chat_id_str)
 
 @app.route("/", methods = ['GET','POST'])
 def hello_word():
