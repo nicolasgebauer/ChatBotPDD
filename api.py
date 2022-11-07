@@ -148,7 +148,6 @@ def get_stats(lobby_id):
         gamers = response.json()
         print(gamers)
         for item in gamers:
-            print(item["username"])
-            print(item("won_number"))
+            print(item["username"], item["won_number"])
         return True
     return False
