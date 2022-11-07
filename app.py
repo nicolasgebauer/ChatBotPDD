@@ -20,7 +20,7 @@ def welcome_message(item):
         resp = requests.get(to_url)
 
 def create_user(item):
-    if item["text"].lower() == "create user":
+    if item["text"].lower() == "/start":
         user_id = str(item["from"]["id"])
         username = str(item["from"]["first_name"])
         chat_id = item["chat"]["id"]
