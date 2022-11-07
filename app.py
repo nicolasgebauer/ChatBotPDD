@@ -162,6 +162,7 @@ def hello_word():
                 set_numbers(data)
                 is_game_numbers_active(data)
                 create_user(data)
+                stats(data)
                 return {"statusCode": 200, "body": "Success", "data": data}
             else:        
                 return {'statusCode':404, 'body':'User has left the chatroom and deleted the chat', 'data':data}
