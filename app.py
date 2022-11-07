@@ -162,6 +162,7 @@ def hello_word():
                 return {'statusCode':404, 'body':'User has left the chatroom and deleted the chat', 'data':data}
         else:
             return {'statusCode':200, 'body':'Success'}
+    return
 
 if __name__ == '__main__':
     app.run(debug=True)
