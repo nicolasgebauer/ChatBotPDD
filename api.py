@@ -150,5 +150,6 @@ def get_stats(lobby_id):
         gamers = response.json()
         for item in gamers:
             in_order += f"""%0A    {count+1}- {item["username"]}: {item["won_number"]} ganados"""
+            count += 1
         return in_order
     return False
