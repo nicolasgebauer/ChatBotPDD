@@ -3,6 +3,17 @@ import requests
 import json
 
 api_url = 'https://apipds4.herokuapp.com/'
+trivia_url = "https://the-trivia-api.com/api/questions"
+
+def get_new_question():
+    question_data = requests.get(trivia_url)
+    first_question = question_data.json()[0]
+    dict_trivia = {
+        "question": first_question["question"],
+        "correctAnswer": first_question["correctAnswer"],
+        "incorrectAnswers": first_question["incorrectAnswers"]
+    }
+    return dict_trivia
 
 def create_user(tel_id, username, lobby_id):
     data = {"username": username, "telegram_id": tel_id, "lobby": lobby_id, "won_number": 0, "won_trivia": 0, "won_third": 0, "number_tries": 0}
@@ -23,9 +34,11 @@ def create_number_game(lobby_id, max_number, tries):
     print("intentos", tries)
     data = {"lobby": lobby_id, "number": rand_number, "status": 0}
     data_check = {"lobby_id": lobby_id}
-    active_games = requests.get(f'{api_url}gamenumber_active/', data_check)
-    print("Activos:", list(active_games.json()))
-    if len(list(active_games.json())) > 0:
+    active_number_games = requests.get(f'{api_url}gamenumber_active/', data_check)
+    active_trivia_first_games = requests.get(f'{api_url}gametriviafirst_active/', data_check)
+    print("Activos Number:", list(active_number_games.json()))
+    print("activos trivia first:", list(active_trivia_first_games.json()))
+    if len(list(active_number_games.json())) > 0 or len(list(active_trivia_first_games.json())) > 0:
         return 2 ## ya existe
     response = requests.post(f'{api_url}game_numbers/', json=data)
     print("CREACION DE JUEGO:", response.content)
@@ -34,6 +47,23 @@ def create_number_game(lobby_id, max_number, tries):
         if not user_tries:
             return 4
         return 1
+    return 3
+
+def create_trivia_first(lobby_id, question_number):
+    print("numero  preguntas:", question_number)
+    question = get_new_question()
+    data = {"lobby": lobby_id, "questions_number": question_number, "status": 0, "correct_answer": question["correctAnswer"]}
+    data_check = {"lobby_id": lobby_id}
+    active_number_games = requests.get(f'{api_url}gamenumber_active/', data_check)
+    active_trivia_first_games = requests.get(f'{api_url}gametriviafirst_active/', data_check)
+    print("Activos Number:", list(active_number_games.json()))
+    print("activos trivia first:", list(active_trivia_first_games.json()))
+    if len(list(active_number_games.json())) > 0 or len(list(active_trivia_first_games.json())) > 0:
+        return 2, 0 ## ya existe
+    response = requests.post(f'{api_url}game_trivia_firsts/', json=data)
+    print("CREACION DE JUEGO:", response.content)
+    if response.status_code == 200:
+        return 1, question["question"], question["incorrectAnswers"], question["correctAnswer"]
     return 3
 
 def guess_number(lobby_id, guess):
@@ -67,9 +97,17 @@ def set_user_tries(lobby_id, tries):
         return True
     return False
 
-def get_game_numbers_activate(lobby_id):
+def get_game_numbers_active(lobby_id):
     data_check = {"lobby_id": lobby_id}
     active_games = requests.get(f'{api_url}gamenumber_active/', data_check)
+    game = list(active_games.json())
+    if len(game) > 0:
+        return True
+    return False
+
+def get_game_trivia_first_active(lobby_id):
+    data_check = {"lobby_id": lobby_id}
+    active_games = requests.get(f'{api_url}gametriviafirst_active/', data_check)
     game = list(active_games.json())
     if len(game) > 0:
         return True
