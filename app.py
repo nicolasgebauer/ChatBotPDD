@@ -178,7 +178,7 @@ def set_trivia_first(item):
                 correct = game[3]
                 msg_good = f"Juego Trivia: First, iniciado >>> preguntas = {sets[2]}."
                 send_msg(chat_id, msg_good)
-                msg_question = f"Pregunta 1: {question}."
+                msg_question = f"Pregunta 1: {question}"
                 send_msg(chat_id, msg_question)
                 msg = f"{incorrect}, {correct}"
             elif game[0] == 2:
