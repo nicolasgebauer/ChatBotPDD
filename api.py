@@ -57,7 +57,7 @@ def create_trivia_first(lobby_id, question_number):
     active_trivia_first_games = get_game_trivia_first_active(lobby_id)
     if active_number_games or active_trivia_first_games:
         return 2 ## ya existe
-    response = requests.post(f'{api_url}gametriviafirsts/', json=data)
+    response = requests.post(f'{api_url}game_trivia_firsts/', json=data)
     print("CREACION DE JUEGO:", response.content)
     if response.status_code == 200:
         return 1, question["question"], question["incorrectAnswers"], question["correctAnswer"]
