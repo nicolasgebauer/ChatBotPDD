@@ -101,9 +101,13 @@ def set_guess(item):
                     to_url = f'https://api.telegram.org/bot{TOKEN}/sendMessage?chat_id={chat_id}&text={msg_rest_tries}&parse_mode=HTML'
                     resp = requests.get(to_url)
                     if not api.check_total_tries(chat_id_str):
-                        if api.end_game_numbers(chat_id_str):
+                        end_gme = api.end_game_numbers(chat_id_str)
+                        if end_gme != False:
                             msg_game_losers = f"Juego terminado, ya no quedan más intentos."
                             to_url = f'https://api.telegram.org/bot{TOKEN}/sendMessage?chat_id={chat_id}&text={msg_game_losers}&parse_mode=HTML'
+                            resp = requests.get(to_url)
+                            msg_end = f"El numero correcto era: {end_gme}"
+                            to_url = f'https://api.telegram.org/bot{TOKEN}/sendMessage?chat_id={chat_id}&text={msg_end}&parse_mode=HTML'
                             resp = requests.get(to_url)
                         else:
                             msg_error = "Error al terminar juego"
@@ -121,9 +125,13 @@ def set_guess(item):
                     to_url = f'https://api.telegram.org/bot{TOKEN}/sendMessage?chat_id={chat_id}&text={msg_rest_tries}&parse_mode=HTML'
                     resp = requests.get(to_url)                                        
                     if not api.check_total_tries(chat_id_str):
-                        if api.end_game_numbers(chat_id_str):
+                        end_gme = api.end_game_numbers(chat_id_str)
+                        if end_gme != False:
                             msg_game_losers = f"Juego terminado, ya no quedan más intentos."
                             to_url = f'https://api.telegram.org/bot{TOKEN}/sendMessage?chat_id={chat_id}&text={msg_game_losers}&parse_mode=HTML'
+                            resp = requests.get(to_url)
+                            msg_end = f"El numero correcto era: {end_gme}"
+                            to_url = f'https://api.telegram.org/bot{TOKEN}/sendMessage?chat_id={chat_id}&text={msg_end}&parse_mode=HTML'
                             resp = requests.get(to_url)
                         else:
                             msg_error = "Error al terminar juego"
