@@ -55,7 +55,7 @@ def create_trivia_first(lobby_id, question_number):
     data = {"lobby": lobby_id, "questions_number": question_number, "status": 0, "correct_answer": question["correctAnswer"]}
     active_number_games = get_game_numbers_active(lobby_id)
     active_trivia_first_games = get_game_trivia_first_active(lobby_id)
-    if active_number_games or active_trivia_first_games:
+    if not active_number_games or not active_trivia_first_games:
         return 2, 0 ## ya existe
     response = requests.post(f'{api_url}game_trivia_firsts/', json=data)
     print("CREACION DE JUEGO:", response.content)
