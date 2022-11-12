@@ -10,8 +10,13 @@ api_url = 'https://apipds4.herokuapp.com/'
 app = Flask(__name__)
 
 def welcome_message(item):
-    if item["text"].lower() == "hi":
-        msg = "hello"
+    if item["text"].lower() == "info":
+        msg = "Hay tres juegos:\n"
+        msg += "1)NUMBERS: Este juego consiste en adivinar el número que selecciono el bot.\n"
+        msg += "           Este juego se inicia con el mensaje => Numbers 'max' 'intentos'.\n"
+        msg += "           max => numero maximo que puede seleccionar el bot.\n"
+        msg += "           intentos => numero de intentos por jugador.\n"
+        
         chat_id = item["chat"]["id"]
         username = item["from"]["first_name"]
         welcome_msg = f'{msg} {username}'
