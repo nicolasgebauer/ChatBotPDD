@@ -37,7 +37,8 @@ def create_number_game(lobby_id, max_number, tries):
     active_number_games = requests.get(f'{api_url}gamenumber_active/', data_check)
     active_trivia_first_games = requests.get(f'{api_url}gametriviafirst_active/', data_check)
     print("Activos Number:", list(active_number_games.json()))
-    if len(list(active_number_games.json())) > 0 or len(list(active_trivia_first_games)) > 0:
+    print("activos trivia first:", list(active_trivia_first_games.json()))
+    if len(list(active_number_games.json())) > 0 or len(list(active_trivia_first_games.json())) > 0:
         return 2 ## ya existe
     response = requests.post(f'{api_url}game_numbers/', json=data)
     print("CREACION DE JUEGO:", response.content)
