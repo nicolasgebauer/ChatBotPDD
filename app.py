@@ -13,12 +13,12 @@ def welcome_message(item):
     if item["text"].lower() == "info":
         msg = "Hay tres juegos:\n"
         msg += "1)NUMBERS: Conciste en adivinar el número seleccionado por el bot.\n"
-        msg += "           Este Juego se inicia con el mensaje => Numbers 'max' 'intentos'.\n"
-        msg += "           Max => Número maximo que puede seleccionar el bot.\n"
-        msg += "           Intentos => Intentos por jugador.\n"
+        msg += "    Este Juego se inicia con el mensaje => Numbers 'max' 'intentos'.\n"
+        msg += "    Max => Número maximo que puede seleccionar el bot.\n"
+        msg += "    Intentos => Intentos por jugador.\n"
         chat_id = item["chat"]["id"]
         username = item["from"]["first_name"]
-        welcome_msg = f'{msg} {username}'
+        welcome_msg = f'{msg}'
 
         to_url = f'https://api.telegram.org/bot{TOKEN}/sendMessage?chat_id={chat_id}&text={welcome_msg}&parse_mode=HTML'
         resp = requests.get(to_url)
