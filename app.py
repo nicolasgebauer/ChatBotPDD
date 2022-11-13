@@ -43,6 +43,12 @@ def create_user(item):
 def is_game_numbers_active(item):
     chat_id = item["chat"]["id"]
     chat_id_str = str(chat_id)
+    if api.get_game_trivia_first_active(chat_id_str):
+        set_guess(item)
+
+def is_game_trivia_first_active(item):
+    chat_id = item["chat"]["id"]
+    chat_id_str = str(chat_id)
     if api.get_game_numbers_active(chat_id_str):
         set_guess(item)
 
@@ -197,6 +203,22 @@ def set_trivia_first(item):
         final_msg = f'Error de sintaxis para creación de juego.'
         to_url = f'https://api.telegram.org/bot{TOKEN}/sendMessage?chat_id={chat_id}&text={final_msg}&parse_mode=HTML'
         resp = requests.get(to_url)
+
+def set_guess_trivia_first(item):
+    sets = str(item["text"])
+    chat_id = item["chat"]["id"]
+    chat_id_str = str(chat_id)
+    user_id = str(item["from"]["id"])
+    username = item["from"]["first_name"]
+    error = False
+    msg_error = ""
+    try:
+        if ord(sets)>=97 and ord(sets)<=100:
+            msg = f"Respuesta recibida,{username}"
+            send_msg(chat_id,msg)
+    except:
+        msg = f"Respuesta NO recibida,{username}"
+        send_msg(chat_id,msg)
 
 def send_msg(chat_id, msg):
     to_url = f'https://api.telegram.org/bot{TOKEN}/sendMessage?chat_id={chat_id}&text={msg}&parse_mode=HTML'
