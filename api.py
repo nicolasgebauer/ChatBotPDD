@@ -81,9 +81,16 @@ def get_question_data(lobby_id):
     game = list(active_games.json())[0]
     options = [game["correct_answer"], game["incorrect_answer_1"], game["incorrect_answer_2"], game["incorrect_answer_3"]]
     random.shuffle(options)
+    dic = {
+        'a': options[0],
+        'b': options[1],
+        'c': options[2],
+        'd': options[3]
+        }
     data_return = {
         "question": game["question"],
-        "options": options
+        "options": options,
+        "dic_options": dic
     }
     return data_return
 

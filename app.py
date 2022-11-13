@@ -46,11 +46,11 @@ def is_game_numbers_active(item):
     if api.get_game_numbers_active(chat_id_str):
         set_guess(item)
 
-def is_game_trivia_first_active(item):
+def is_game_trivia_first_active(item,choices):
     chat_id = item["chat"]["id"]
     chat_id_str = str(chat_id)
     if api.get_game_trivia_first_active(chat_id_str):
-        set_guess_trivia_first(item)
+        set_guess_trivia_first(item,choices)
 
 def set_numbers(item):
     sets = item["text"].split()
@@ -186,6 +186,7 @@ def set_trivia_first(item):
                 q_data = api.get_question_data(chat_id_str)
                 question = q_data["question"]
                 options = q_data["options"]
+                choices = q_data["dic_options"]
                 msg_good = f"Juego Trivia: First, iniciado >>> preguntas = {sets[2]}."
                 send_msg(chat_id, msg_good)
                 msg_question = f"Pregunta: {question}"
@@ -199,12 +200,15 @@ def set_trivia_first(item):
                 msg = "Error al crear un juego."
             to_url = f'https://api.telegram.org/bot{TOKEN}/sendMessage?chat_id={chat_id}&text={msg}&parse_mode=HTML'
             resp = requests.get(to_url)
+            if game == 2:
+                return choices
+            return None
     except:
         final_msg = f'Error de sintaxis para creación de juego.'
         to_url = f'https://api.telegram.org/bot{TOKEN}/sendMessage?chat_id={chat_id}&text={final_msg}&parse_mode=HTML'
         resp = requests.get(to_url)
 
-def set_guess_trivia_first(item):
+def set_guess_trivia_first(item,choices):
     sets = str(item["text"])
     chat_id = item["chat"]["id"]
     chat_id_str = str(chat_id)
@@ -214,10 +218,10 @@ def set_guess_trivia_first(item):
     msg_error = ""
     try:
         if ord(sets)>=97 and ord(sets)<=100:
-            msg = f"Respuesta recibida,{username}"
+            msg = f"Respuesta recibida, tu respuesta es {choices[sets]}, {username}"
             send_msg(chat_id,msg)
     except:
-        msg = f"Respuesta NO recibida,{username}"
+        msg = f"Respuesta NO recibida, {username}"
         send_msg(chat_id,msg)
 
 def send_msg(chat_id, msg):
@@ -235,7 +239,7 @@ def hello_word():
             if "text" in data:
                 welcome_message(data)
                 set_numbers(data)
-                set_trivia_first(data)
+                choices = set_trivia_first(data)
                 is_game_numbers_active(data)
                 is_game_trivia_first_active(data)
                 create_user(data)
