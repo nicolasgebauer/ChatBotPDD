@@ -52,14 +52,23 @@ def create_number_game(lobby_id, max_number, tries):
 def create_trivia_first(lobby_id, question_number):
     print("numero  preguntas:", question_number)
     question = get_new_question()
-    data = {"lobby": lobby_id, "questions_number": question_number, "status": 0, "correct_answer": question["correctAnswer"]}
+    data = {
+        "lobby": lobby_id, 
+        "questions_number": question_number, 
+        "status": 0, 
+        "correct_answer": question["correctAnswer"], 
+        "incorrect_answer_1": question["incorrectAnswers"][0],
+        "incorrect_answer_2": question["incorrectAnswers"][1],
+        "incorrect_answer_3": question["incorrectAnswers"][2],
+        "question": question["question"]
+        }
     data_check = {"lobby_id": lobby_id}
     active_number_games = requests.get(f'{api_url}gamenumber_active/', data_check)
     active_trivia_first_games = requests.get(f'{api_url}gametriviafirst_active/', data_check)
     print("Activos Number:", list(active_number_games.json()))
     print("activos trivia first:", list(active_trivia_first_games.json()))
     if len(list(active_number_games.json())) > 0 or len(list(active_trivia_first_games.json())) > 0:
-        return 2, 0 ## ya existe
+        return 2 ## ya existe
     response = requests.post(f'{api_url}game_trivia_firsts/', json=data)
     print("CREACION DE JUEGO:", response.content)
     if response.status_code == 200:
