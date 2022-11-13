@@ -46,12 +46,6 @@ def is_game_numbers_active(item):
     if api.get_game_numbers_active(chat_id_str):
         set_guess(item)
 
-def is_game_trivia_first_active(item):
-    chat_id = item["chat"]["id"]
-    chat_id_str = str(chat_id)
-    if api.get_game_trivia_first_active(chat_id_str):
-        set_guess_trivia_first(item)
-
 def set_numbers(item):
     sets = item["text"].split()
     chat_id = item["chat"]["id"]
@@ -190,10 +184,7 @@ def set_trivia_first(item):
                 send_msg(chat_id, msg_good)
                 msg_question = f"Pregunta 1: {question}"
                 send_msg(chat_id, msg_question)
-                msg = ""
-                for i in range(len(incorrect)):
-                    msg += f"{chr(i+97)}) {incorrect[i]}\n"
-                msg += f"{chr(len(incorrect)+97)}) {correct}"
+                msg = f"{incorrect}, {correct}"
             elif game[0] == 2:
                 msg = "Ya existe un juego activo."
             else:
@@ -204,9 +195,6 @@ def set_trivia_first(item):
         final_msg = f'Error de sintaxis para creación de juego.'
         to_url = f'https://api.telegram.org/bot{TOKEN}/sendMessage?chat_id={chat_id}&text={final_msg}&parse_mode=HTML'
         resp = requests.get(to_url)
-
-def set_guess_trivia_first(item):
-    pass
 
 def send_msg(chat_id, msg):
     to_url = f'https://api.telegram.org/bot{TOKEN}/sendMessage?chat_id={chat_id}&text={msg}&parse_mode=HTML'
