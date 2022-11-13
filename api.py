@@ -292,5 +292,5 @@ def next_question_game_trivia_first(lobby_id):
     print("response==>",response)
     print("CAMBIO DE STATUS:", response.content)
     if response.status_code == 200:
-        return game["actual_question"]+1
+        return game["actual_question"]
     return False
