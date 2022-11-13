@@ -130,6 +130,8 @@ def get_game_trivia_first_active(lobby_id):
     data_check = {"lobby_id": lobby_id}
     active_games = requests.get(f'{api_url}gametriviafirst_active/', data_check)
     game = list(active_games.json())
+    print("Trivia activa")
+    print("TriviaFirst: ",game)
     if len(game) > 0:
         return True
     return False
