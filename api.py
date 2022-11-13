@@ -34,7 +34,7 @@ def get_question_data(lobby_id):
     return data_return
 
 def create_user(tel_id, username, lobby_id):
-    data = {"username": username, "telegram_id": tel_id, "lobby": lobby_id, "won_number": 0, "won_trivia": 0, "won_third": 0, "number_tries": 0}
+    data = {"username": username, "telegram_id": tel_id, "lobby": lobby_id, "won_number": 0, "won_trivia": 0, "won_third": 0, "number_tries": 0, "trivia_score": 0}
     data_check = {"tel_id": tel_id, "lobby_id": lobby_id}
     users = requests.get(f'{api_url}user_created/', data_check)
     print("Usuarios:", list(users.json()))
@@ -78,8 +78,9 @@ def create_trivia_first(lobby_id, question_number):
         "incorrect_answer_1": question["incorrectAnswers"][0],
         "incorrect_answer_2": question["incorrectAnswers"][1],
         "incorrect_answer_3": question["incorrectAnswers"][2],
-        "question": question["question"]
-        }
+        "question": question["question"],
+        "actual_question": 1
+    }
     data_check = {"lobby_id": lobby_id}
     active_number_games = requests.get(f'{api_url}gamenumber_active/', data_check)
     active_trivia_first_games = requests.get(f'{api_url}gametriviafirst_active/', data_check)
@@ -164,13 +165,16 @@ def tries_down(lobby_id, tel_id):
     user = list(users.json())[0]
     print("USER:",user)
     user_id = user["id"]
-    data = {"username": user["username"],
-    "telegram_id": user["telegram_id"],
-    "lobby": user["lobby"],
-    "won_number": user["won_number"],
-    "won_trivia": user["won_trivia"],
-    "won_third": user["won_third"],
-    "number_tries": (user["number_tries"]-1) }
+    data = {
+        "username": user["username"],
+        "telegram_id": user["telegram_id"],
+        "lobby": user["lobby"],
+        "won_number": user["won_number"],
+        "won_trivia": user["won_trivia"],
+        "won_third": user["won_third"],
+        "number_tries": (user["number_tries"]-1),
+        "trivia_score": user["trivia_score"]
+    }
     print("USER DATA:",data)
     response = requests.put(f'{api_url}users/{user_id}/', json=data)
     print("RESTA DE INTENTOS:", response.content)
@@ -190,13 +194,16 @@ def won_number_games(lobby_id, tel_id):
     user = list(users.json())[0]
     print("USER:",user)
     user_id = user["id"]
-    data = {"username": user["username"],
-    "telegram_id": user["telegram_id"],
-    "lobby": user["lobby"],
-    "won_number": user["won_number"]+1,
-    "won_trivia": user["won_trivia"],
-    "won_third": user["won_third"],
-    "number_tries": user["number_tries"] }
+    data = {
+        "username": user["username"],
+        "telegram_id": user["telegram_id"],
+        "lobby": user["lobby"],
+        "won_number": user["won_number"]+1,
+        "won_trivia": user["won_trivia"],
+        "won_third": user["won_third"],
+        "number_tries": user["number_tries"],
+        "trivia_score": user["trivia_score"] 
+    }
     print("USER DATA:",data)
     response = requests.put(f'{api_url}users/{user_id}/', json=data)
     print("RESTA DE INTENTOS:", response.content)
@@ -242,14 +249,16 @@ def end_game_trivia_first(lobby_id):
     active_games = requests.get(f'{api_url}gametriviafirst_active/', data_check)
     game = list(active_games.json())[0]
     
-    data = {"lobby": game["lobby"],
-    "questions_number": game["questions_number"],
-    "status": 1,
-    "correct_answer": game["correct_answer"],
-    "incorrect_answer_1": game["incorrect_answer_1"],
-    "incorrect_answer_2": game["incorrect_answer_2"],
-    "incorrect_answer_3": game["incorrect_answer_3"],
-    "question": game["question"]
+    data = {
+        "lobby": game["lobby"],
+        "questions_number": game["questions_number"],
+        "status": 1,
+        "correct_answer": game["correct_answer"],
+        "incorrect_answer_1": game["incorrect_answer_1"],
+        "incorrect_answer_2": game["incorrect_answer_2"],
+        "incorrect_answer_3": game["incorrect_answer_3"],
+        "question": game["question"],
+        "actual_question": game["actual_question"]
     }
     response = requests.put(f'{api_url}game_trivia_firsts/{game["id"]}/', json=data)
     print("CAMBIO DE STATUS:", response.content)
@@ -265,14 +274,16 @@ def next_question_game_trivia_first(lobby_id):
     new_question = get_new_question()
     new_qn = (game["questions_number"]-1)
     print("new_qn==>",new_qn)
-    data = {"lobby": game["lobby"],
-    "questions_number": new_qn,
-    "status": game["status"],
-    "correct_answer": new_question["correctAnswer"],
-    "incorrect_answer_1": new_question["incorrectAnswers"][0],
-    "incorrect_answer_2": new_question["incorrectAnswers"][1],
-    "incorrect_answer_3": new_question["incorrectAnswers"][2],
-    "question": new_question["question"]
+    data = {
+        "lobby": game["lobby"],
+        "questions_number": new_qn,
+        "status": game["status"],
+        "correct_answer": new_question["correctAnswer"],
+        "incorrect_answer_1": new_question["incorrectAnswers"][0],
+        "incorrect_answer_2": new_question["incorrectAnswers"][1],
+        "incorrect_answer_3": new_question["incorrectAnswers"][2],
+        "question": new_question["question"],
+        "actual_question": (game["actual_question"]+1)
     }
     response = requests.put(f'{api_url}game_trivia_firsts/{game["id"]}/', json=data)
     active_games = requests.get(f'{api_url}gametriviafirst_active/', data_check)
@@ -281,5 +292,5 @@ def next_question_game_trivia_first(lobby_id):
     print("response==>",response)
     print("CAMBIO DE STATUS:", response.content)
     if response.status_code == 200:
-        return True
+        return game["actual_question"]+1
     return False
