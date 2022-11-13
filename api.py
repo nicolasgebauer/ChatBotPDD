@@ -1,6 +1,7 @@
 import random
 import requests
 import json
+import unicodedata
 
 api_url = 'https://apipds4.herokuapp.com/'
 trivia_url = "https://the-trivia-api.com/api/questions"
@@ -10,10 +11,15 @@ def get_new_question():
     first_question = question_data.json()[0]
     dict_trivia = {
         "question": first_question["question"],
-        "correctAnswer": first_question["correctAnswer"],
+        "correctAnswer": fix_string(first_question["correctAnswer"]),
         "incorrectAnswers": first_question["incorrectAnswers"]
     }
     return dict_trivia
+
+def fix_string(bad_str):
+    new_str = bad_str.strip()
+    new_str = unicodedata.normalize("NFKD", new_str)
+    return new_str
 
 def get_question_data(lobby_id):
     data_check = {"lobby_id": lobby_id}
@@ -272,7 +278,7 @@ def next_question_game_trivia_first(lobby_id):
     active_games = requests.get(f'{api_url}gametriviafirst_active/', data_check)
     game = list(active_games.json())[0]
     print("Game ==>",game)
-    ("response==>",response)
+    print("response==>",response)
     print("CAMBIO DE STATUS:", response.content)
     if response.status_code == 200:
         return True
