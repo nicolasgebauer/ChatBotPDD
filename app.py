@@ -43,14 +43,14 @@ def create_user(item):
 def is_game_numbers_active(item):
     chat_id = item["chat"]["id"]
     chat_id_str = str(chat_id)
-    if api.get_game_trivia_first_active(chat_id_str):
+    if api.get_game_numbers_active(chat_id_str):
         set_guess(item)
 
 def is_game_trivia_first_active(item):
     chat_id = item["chat"]["id"]
     chat_id_str = str(chat_id)
-    if api.get_game_numbers_active(chat_id_str):
-        set_guess(item)
+    if api.get_game_trivia_first_active(chat_id_str):
+        set_guess_trivia_first(item)
 
 def set_numbers(item):
     sets = item["text"].split()
