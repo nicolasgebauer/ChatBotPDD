@@ -181,6 +181,7 @@ def set_trivia_first(item):
     try:
         if sets[0].lower() == "trivia" and sets[1].lower() == "first" and int(sets[2]) > 0:
             game = api.create_trivia_first(chat_id_str, int(sets[2]))
+            
             msg = ""
             if game == 1:
                 q_data = api.get_question_data(chat_id_str)
