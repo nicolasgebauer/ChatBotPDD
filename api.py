@@ -261,9 +261,9 @@ def next_question_game_trivia_first(lobby_id):
     "questions_number": game["questions_number"]-1,
     "status": game["status"],
     "correct_answer": new_question["correctAnswer"],
-    "incorrect_answer_1": new_question["incorrectAnswer"][0],
-    "incorrect_answer_2": new_question["incorrectAnswer"][1],
-    "incorrect_answer_3": new_question["incorrectAnswer"][2],
+    "incorrect_answer_1": new_question["incorrectAnswers"][0],
+    "incorrect_answer_2": new_question["incorrectAnswers"][1],
+    "incorrect_answer_3": new_question["incorrectAnswers"][2],
     "question": new_question["question"]
     }
     response = requests.put(f'{api_url}game_trivia_firsts/{game["id"]}/', json=data)
