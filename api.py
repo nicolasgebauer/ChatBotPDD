@@ -87,6 +87,7 @@ def get_question_data(lobby_id):
         'c': options[2],
         'd': options[3]
         }
+    print("Diccionario en api: ", dic)
     data_return = {
         "question": game["question"],
         "options": options,

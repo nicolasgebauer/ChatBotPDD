@@ -187,6 +187,7 @@ def set_trivia_first(item):
                 question = q_data["question"]
                 options = q_data["options"]
                 choices = q_data["dic_options"]
+                print("choices_1: ", choices)
                 msg_good = f"Juego Trivia: First, iniciado >>> preguntas = {sets[2]}."
                 send_msg(chat_id, msg_good)
                 msg_question = f"Pregunta: {question}"
@@ -241,6 +242,7 @@ def hello_word():
                 welcome_message(data)
                 set_numbers(data)
                 choices = set_trivia_first(data)
+                print("choices_2: ",choices)
                 is_game_numbers_active(data)
                 is_game_trivia_first_active(data,choices)
                 create_user(data)
