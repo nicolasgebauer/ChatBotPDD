@@ -241,7 +241,7 @@ def hello_word():
                 set_numbers(data)
                 choices = set_trivia_first(data)
                 is_game_numbers_active(data)
-                is_game_trivia_first_active(data)
+                is_game_trivia_first_active(data,choices)
                 create_user(data)
                 stats(data)
                 return {"statusCode": 200, "body": "Success", "data": data}
