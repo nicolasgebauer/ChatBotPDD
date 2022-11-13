@@ -182,7 +182,7 @@ def set_trivia_first(item):
                 options = q_data["options"]
                 msg_good = f"Juego Trivia: First, iniciado >>> preguntas = {sets[2]}."
                 send_msg(chat_id, msg_good)
-                msg_question = f"Pregunta 1: {question}"
+                msg_question = f"Pregunta: {question}"
                 send_msg(chat_id, msg_question)
                 msg = ""
                 for i in range(len(options)):
