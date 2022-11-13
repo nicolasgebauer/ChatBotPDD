@@ -255,6 +255,7 @@ def next_question_game_trivia_first(lobby_id):
     data_check = {"lobby_id": lobby_id}
     active_games = requests.get(f'{api_url}gametriviafirst_active/', data_check)
     game = list(active_games.json())[0]
+    print("Game ==>",game)
     new_question = get_new_question()
     data = {"lobby": game["lobby"],
     "questions_number": game["questions_number"]-1,
@@ -266,6 +267,7 @@ def next_question_game_trivia_first(lobby_id):
     "question": new_question["question"]
     }
     response = requests.put(f'{api_url}game_trivia_firsts/{game["id"]}/', json=data)
+    response("response==>",response)
     print("CAMBIO DE STATUS:", response.content)
     if response.status_code == 200:
         return True
