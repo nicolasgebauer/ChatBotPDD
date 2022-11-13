@@ -182,19 +182,18 @@ def set_trivia_first(item):
         if sets[0].lower() == "trivia" and sets[1].lower() == "first" and int(sets[2]) > 0:
             game = api.create_trivia_first(chat_id_str, int(sets[2]))
             msg = ""
-            if game[0] == 1:
-                question = game[1]
-                incorrect = game[2]
-                correct = game[3]
+            if game == 1:
+                q_data = api.get_question_data(chat_id_str)
+                question = q_data["question"]
+                options = q_data["options"]
                 msg_good = f"Juego Trivia: First, iniciado >>> preguntas = {sets[2]}."
                 send_msg(chat_id, msg_good)
                 msg_question = f"Pregunta 1: {question}"
                 send_msg(chat_id, msg_question)
                 msg = ""
-                for i in range(len(incorrect)):
-                    msg += f"{chr(i+97)}) {incorrect[i]}\n"
-                msg += f"{chr(len(incorrect)+97)}) {correct}"
-            elif game[0] == 2:
+                for i in range(len(options)):
+                    msg += f"{chr(i+97)}) {options[i]}\n"
+            elif game == 2:
                 msg = "Ya existe un juego activo."
             else:
                 msg = "Error al crear un juego."
