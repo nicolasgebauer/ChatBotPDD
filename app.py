@@ -201,7 +201,7 @@ def set_trivia_first(item):
                 msg = "Error al crear un juego."
             to_url = f'https://api.telegram.org/bot{TOKEN}/sendMessage?chat_id={chat_id}&text={msg}&parse_mode=HTML'
             resp = requests.get(to_url)
-            if game == 2:
+            if game == 1:
                 return choices
             return None
     except:
