@@ -235,7 +235,7 @@ def end_game_trivia_first(lobby_id):
     data_check = {"lobby_id": lobby_id}
     active_games = requests.get(f'{api_url}gametriviafirst_active/', data_check)
     game = list(active_games.json())[0]
-    print("Game==>",game)
+    
     data = {"lobby": game["lobby"],
     "questions_number": game["questions_number"],
     "status": 1,
@@ -244,6 +244,26 @@ def end_game_trivia_first(lobby_id):
     "incorrect_answer_2": game["incorrect_answer_2"],
     "incorrect_answer_3": game["incorrect_answer_3"],
     "question": game["question"]
+    }
+    response = requests.put(f'{api_url}game_trivia_firsts/{game["id"]}/', json=data)
+    print("CAMBIO DE STATUS:", response.content)
+    if response.status_code == 200:
+        return True
+    return False
+
+def next_question_game_trivia_first(lobby_id):
+    data_check = {"lobby_id": lobby_id}
+    active_games = requests.get(f'{api_url}gametriviafirst_active/', data_check)
+    game = list(active_games.json())[0]
+    new_question = get_new_question()
+    data = {"lobby": game["lobby"],
+    "questions_number": game["questions_number"]-1,
+    "status": game["status"],
+    "correct_answer": new_question["correctAnswer"],
+    "incorrect_answer_1": new_question["incorrectAnswer"][0],
+    "incorrect_answer_2": new_question["incorrectAnswer"][1],
+    "incorrect_answer_3": new_question["incorrectAnswer"][2],
+    "question": new_question["question"]
     }
     response = requests.put(f'{api_url}game_trivia_firsts/{game["id"]}/', json=data)
     print("CAMBIO DE STATUS:", response.content)

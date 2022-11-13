@@ -218,6 +218,16 @@ def set_guess_trivia_first(item):
         if game == 1:
             msg = f"Respuesta {sets} es correcta, {username}"
             send_msg(chat_id,msg)
+            if api.next_question_game_trivia_first(chat_id_str):
+                q_data = api.get_question_data(chat_id_str)
+                question = q_data["question"]
+                options = q_data["options"]
+                msg_question = f"Pregunta: {question}"
+                send_msg(chat_id, msg_question)
+                msg = ""
+                for i in range(len(options)):
+                    msg += f"{chr(i+97)}) {options[i]}\n"
+                send_msg(chat_id_str,msg)
         elif game ==2:
             msg = f"Respuesta {sets} es correcta, {username}"
             send_msg(chat_id,msg)
