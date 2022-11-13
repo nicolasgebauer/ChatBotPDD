@@ -165,14 +165,14 @@ def stats(item):
     chat_id = item["chat"]["id"]
     chat_id_str = str(chat_id)
     if item["text"].lower() == "stats":
-        result = api.get_stats(chat_id_str)
-        if  result != False:
-            to_url = f'https://api.telegram.org/bot{TOKEN}/sendMessage?chat_id={chat_id}&text={result}&parse_mode=HTML'
-            resp = requests.get(to_url)
+        result_1 = api.get_stats(chat_id_str)
+        result_2 = api.get_trivia_stats(chat_id_str)
+        if  result_1 != False and result_2 != False:
+            send_msg(chat_id, result_1)
+            send_msg(chat_id, result_2)
         else:
             msg = "Error al conseguir las estadísticas."
-            to_url = f'https://api.telegram.org/bot{TOKEN}/sendMessage?chat_id={chat_id}&text={msg}&parse_mode=HTML'
-            resp = requests.get(to_url)
+            send_msg(chat_id, msg)
 
 def set_trivia_first(item):
     sets = item["text"].split()

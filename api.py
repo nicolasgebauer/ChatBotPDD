@@ -270,6 +270,20 @@ def get_stats(lobby_id):
         return in_order
     return False
 
+def get_trivia_stats(lobby_id):
+    data_check = {"lobby_id": lobby_id}
+    response = requests.get(f'{api_url}get_trivia_stats/', data_check)
+    print("ORDEN DE JUGADORES:", response.content)
+    in_order = "Estadisticas Trivia:"
+    count = 0
+    if response.status_code == 200:
+        gamers = response.json()
+        for item in gamers:
+            in_order += f"""%0A    {count+1}- {item["username"]}: {item["won_number"]} ganados"""
+            count += 1
+        return in_order
+    return False
+
 def end_game_trivia_first(lobby_id):
     data_check = {"lobby_id": lobby_id}
     active_games = requests.get(f'{api_url}gametriviafirst_active/', data_check)
