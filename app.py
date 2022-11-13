@@ -223,7 +223,7 @@ def set_guess_trivia_first(item):
                 q_data = api.get_question_data(chat_id_str)
                 question = q_data["question"]
                 options = q_data["options"]
-                msg_question = f"Pregunta {next_q+1}: {question}"
+                msg_question = f"**Pregunta {next_q+1}: {question}**"
                 send_msg(chat_id, msg_question)
                 msg = ""
                 for i in range(len(options)):
