@@ -120,10 +120,11 @@ def guess_trivia_first(lobby_id, guess):
         print("game:", game)
         correct = game[0]["correct_answer"].lower()
         print("correct:",correct)
-        if guess != correct:
+        if guess == correct:
+            question_numbers = game[0]["questions_number"]
+            if question_numbers > 1:
+                return 1
             return 2
-        else:
-            return 1
     else:
         return -1
     
@@ -228,4 +229,23 @@ def get_stats(lobby_id):
             in_order += f"""%0A    {count+1}- {item["username"]}: {item["won_number"]} ganados"""
             count += 1
         return in_order
+    return False
+
+def end_game_trivia_first(lobby_id):
+    data_check = {"lobby_id": lobby_id}
+    active_games = requests.get(f'{api_url}gametriviafirst_active/', data_check)
+    game = list(active_games.json())[0]
+    data = {"lobby": game["lobby"],
+    "questions_number": game["questions_number"],
+    "status": 1,
+    "correct_answer": game["correct_answer"],
+    "incorrect_answer_1": game["incorrect_answer_1"],
+    "incorrect_answer_2": game["incorrect_answer_2"],
+    "incorrect_answer_3": game["incorrect_answer_3"],
+    "question": game["question"]
+    }
+    response = requests.put(f'{api_url}game_trivia_firsts/{game[0]["id"]}/', json=data)
+    print("CAMBIO DE STATUS:", response.content)
+    if response.status_code == 200:
+        return True
     return False

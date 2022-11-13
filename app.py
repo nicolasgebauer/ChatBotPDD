@@ -217,11 +217,16 @@ def set_guess_trivia_first(item):
         game = api.guess_trivia_first(chat_id_str, sets.lower())
         if game == 1:
             msg = f"Respuesta {sets} es correcta, {username}"
-        elif game == 2:
-            msg = f"Respuesta {sets} es incorrecta, {username}"
-        else:
-            msg = "Error"
-        send_msg(chat_id,msg)
+            send_msg(chat_id,msg)
+        elif game ==2:
+            msg = f"Respuesta {sets} es correcta, {username}"
+            send_msg(chat_id,msg)
+            if api.end_game_trivia_first(chat_id_str):
+                msg = f"Juego terminado."
+                send_msg(chat_id,msg)
+            else:
+                msg = f"Error al terminar juego."
+                send_msg(chat_id,msg)
     except:
         msg = f"Respuesta NO recibida, {username}"
         send_msg(chat_id,msg)
