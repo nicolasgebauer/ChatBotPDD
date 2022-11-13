@@ -52,19 +52,40 @@ def create_number_game(lobby_id, max_number, tries):
 def create_trivia_first(lobby_id, question_number):
     print("numero  preguntas:", question_number)
     question = get_new_question()
-    data = {"lobby": lobby_id, "questions_number": question_number, "status": 0, "correct_answer": question["correctAnswer"]}
+    data = {
+        "lobby": lobby_id, 
+        "questions_number": question_number, 
+        "status": 0, 
+        "correct_answer": question["correctAnswer"], 
+        "incorrect_answer_1": question["incorrectAnswers"][0],
+        "incorrect_answer_2": question["incorrectAnswers"][1],
+        "incorrect_answer_3": question["incorrectAnswers"][2],
+        "question": question["question"]
+        }
     data_check = {"lobby_id": lobby_id}
     active_number_games = requests.get(f'{api_url}gamenumber_active/', data_check)
     active_trivia_first_games = requests.get(f'{api_url}gametriviafirst_active/', data_check)
     print("Activos Number:", list(active_number_games.json()))
     print("activos trivia first:", list(active_trivia_first_games.json()))
     if len(list(active_number_games.json())) > 0 or len(list(active_trivia_first_games.json())) > 0:
-        return 2, 0 ## ya existe
+        return 2 ## ya existe
     response = requests.post(f'{api_url}game_trivia_firsts/', json=data)
     print("CREACION DE JUEGO:", response.content)
     if response.status_code == 200:
-        return 1, question["question"], question["incorrectAnswers"], question["correctAnswer"]
+        return 1
     return 3
+
+def get_question_data(lobby_id):
+    data_check = {"lobby_id": lobby_id}
+    active_games = requests.get(f'{api_url}gametriviafirst_active/', data_check)
+    game = list(active_games.json())[0]
+    options = [game["correct_answer"], game["incorrect_answer_1"], game["incorrect_answer_2"], game["incorrect_answer_3"]]
+    random.shuffle(options)
+    data_return = {
+        "question": game["question"],
+        "options": options
+    }
+    return data_return
 
 def guess_number(lobby_id, guess):
     data_check = {"lobby_id": lobby_id}
