@@ -257,7 +257,8 @@ def next_question_game_trivia_first(lobby_id):
     game = list(active_games.json())[0]
     print("Game ==>",game)
     new_question = get_new_question()
-    new_qn = game["questions_number"]-1
+    new_qn = (game["questions_number"]-1)
+    print("new_qn==>",new_qn)
     data = {"lobby": game["lobby"],
     "questions_number": new_qn,
     "status": game["status"],
