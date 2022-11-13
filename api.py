@@ -323,7 +323,7 @@ def next_question_game_trivia_first(lobby_id):
 
 def set_users_points_trivia(lobby_id):
     data_check = {"lobby_id": lobby_id}
-    response = requests.post(f'{api_url}set_users_trivia_score_zero/', data_check)
+    response = requests.post(f'{api_url}set_users_trivia_score_zero/', json=data_check)
     print("Trivia score zero:", response.content)
     if response.status_code == 200:
         return True
