@@ -4,7 +4,7 @@ import json
 import unicodedata
 
 api_url = 'https://apipds4.herokuapp.com/'
-trivia_url = "https://the-trivia-api.com/api/questions"
+trivia_url = "https://the-trivia-api.com/api/questions?categories=sport_and_leisure,general_knowledge,geography,history,science&limit=1&difficulty=easy"
 
 def get_new_question():
     question_data = requests.get(trivia_url)
