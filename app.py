@@ -215,9 +215,9 @@ def set_guess_trivia_first(item):
     try:
         game = api.guess_trivia_first(chat_id_str, sets.lower())
         if game == 1:
-            msg = "Respuesta correcta"
+            msg = f"Respuesta {sets} es correcta, {username}"
         elif game == 2:
-            msg = "Respuesta incorrecta"
+            msg = f"Respuesta {sets} es incorrecta, {username}"
         else:
             msg = "Error"
         send_msg(chat_id,msg)
