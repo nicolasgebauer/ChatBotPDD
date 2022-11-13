@@ -184,7 +184,10 @@ def set_trivia_first(item):
                 send_msg(chat_id, msg_good)
                 msg_question = f"Pregunta 1: {question}"
                 send_msg(chat_id, msg_question)
-                msg = f"{incorrect}, {correct}"
+                msg = ""
+                for i in range(len(incorrect)):
+                    msg += f"{i}) {incorrect[i]}\n"
+                msg += f"{len(incorrect)}) {correct}"
             elif game[0] == 2:
                 msg = "Ya existe un juego activo."
             else:
