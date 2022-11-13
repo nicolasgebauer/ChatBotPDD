@@ -15,6 +15,18 @@ def get_new_question():
     }
     return dict_trivia
 
+def get_question_data(lobby_id):
+    data_check = {"lobby_id": lobby_id}
+    active_games = requests.get(f'{api_url}gametriviafirst_active/', data_check)
+    game = list(active_games.json())[0]
+    options = [game["correct_answer"], game["incorrect_answer_1"], game["incorrect_answer_2"], game["incorrect_answer_3"]]
+    random.shuffle(options)
+    data_return = {
+        "question": game["question"],
+        "options": options
+    }
+    return data_return
+
 def create_user(tel_id, username, lobby_id):
     data = {"username": username, "telegram_id": tel_id, "lobby": lobby_id, "won_number": 0, "won_trivia": 0, "won_third": 0, "number_tries": 0}
     data_check = {"tel_id": tel_id, "lobby_id": lobby_id}
@@ -73,7 +85,7 @@ def create_trivia_first(lobby_id, question_number):
     response = requests.post(f'{api_url}game_trivia_firsts/', json=data)
     print("CREACION DE JUEGO:", response.content, response.status_code)
     if response.status_code == 200:
-        return 1, question["question"], question["incorrectAnswers"], question["correctAnswer"]
+        return 1
     return 3
 
 def guess_number(lobby_id, guess):
