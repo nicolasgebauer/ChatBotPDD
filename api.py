@@ -279,7 +279,7 @@ def get_trivia_stats(lobby_id):
     if response.status_code == 200:
         gamers = response.json()
         for item in gamers:
-            in_order += f"""%0A    {count+1}- {item["username"]}: {item["won_number"]} ganados"""
+            in_order += f"""%0A    {count+1}- {item["username"]}: {item["won_trivia"]} ganados"""
             count += 1
         return in_order
     return False
