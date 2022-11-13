@@ -218,7 +218,8 @@ def set_guess_trivia_first(item,choices):
     msg_error = ""
     try:
         if ord(sets)>=97 and ord(sets)<=100:
-            msg = f"Respuesta recibida, tu respuesta es {choices[sets]}, {username}"
+            print(choices)
+            msg = f"Respuesta recibida, {username}"
             send_msg(chat_id,msg)
     except:
         msg = f"Respuesta NO recibida, {username}"
