@@ -92,7 +92,8 @@ def create_trivia_first(lobby_id, question_number):
     response = requests.post(f'{api_url}game_trivia_firsts/', json=data)
     print("CREACION DE JUEGO:", response.content, response.status_code)
     if response.status_code == 200:
-        return 1
+        if set_users_points_trivia(lobby_id):
+            return 1
     return 3
 
 def guess_number(lobby_id, guess):
@@ -118,7 +119,7 @@ def guess_number(lobby_id, guess):
     else:
         return -1
 
-def guess_trivia_first(lobby_id, guess):
+def guess_trivia_first(lobby_id, tel_id,guess):
     data_check = {"lobby_id": lobby_id}
     active_games = requests.get(f'{api_url}gametriviafirst_active/', data_check)
     game = list(active_games.json())
@@ -128,10 +129,12 @@ def guess_trivia_first(lobby_id, guess):
         correct = game[0]["correct_answer"].lower()
         print("correct:",correct)
         if guess == correct:
-            question_numbers = game[0]["questions_number"]
-            if question_numbers > 1:
-                return 1
-            return 2
+            if trivia_points(lobby_id,tel_id):
+                question_numbers = game[0]["questions_number"]
+                if question_numbers > 1:
+                    return 1
+                return 2
+            return -1
     else:
         return -1
     
@@ -207,6 +210,29 @@ def won_number_games(lobby_id, tel_id):
     print("USER DATA:",data)
     response = requests.put(f'{api_url}users/{user_id}/', json=data)
     print("RESTA DE INTENTOS:", response.content)
+    if response.status_code == 200:
+        return True
+    return False
+
+def trivia_points(lobby_id,tel_id):
+    data_check1 = {"tel_id": tel_id, "lobby_id": lobby_id}
+    users = requests.get(f'{api_url}user_created/', data_check1)
+    user = list(users.json())[0]
+    print("USER:",user)
+    user_id = user["id"]
+    data = {
+        "username": user["username"],
+        "telegram_id": user["telegram_id"],
+        "lobby": user["lobby"],
+        "won_number": user["won_number"],
+        "won_trivia": user["won_trivia"],
+        "won_third": user["won_third"],
+        "number_tries": user["number_tries"],
+        "trivia_score": (user["trivia_score"] + 1)
+    }
+    print("USER DATA:",data)
+    response = requests.put(f'{api_url}users/{user_id}/', json=data)
+    print("SUBIR TRIVIA SCORE:", response.content)
     if response.status_code == 200:
         return True
     return False
@@ -293,4 +319,51 @@ def next_question_game_trivia_first(lobby_id):
     print("CAMBIO DE STATUS:", response.content)
     if response.status_code == 200:
         return game["actual_question"]
+    return False
+
+def set_users_points_trivia(lobby_id):
+    data_check = {"lobby_id": lobby_id}
+    response = requests.post(f'{api_url}set_users_trivia_score_zero/', data_check)
+    print("Trivia score zero:", response.content)
+    if response.status_code == 200:
+        return True
+    return False
+
+def stats_per_trivia(lobby_id):
+    data_check = {"lobby_id": lobby_id}
+    response = requests.get(f'{api_url}get_trivia_stats/', data_check)
+    print("ORDEN DE JUGADORES:", response.content)
+    in_order = "Estadisticas Trivia First:"
+    count = 0
+    if response.status_code == 200:
+        gamers = response.json()
+        for item in gamers:
+            in_order += f"""%0A    {count+1}- {item["username"]}: {item["trivia_score"]} puntos"""
+            count += 1
+        in_order += f"""%0A    GANADOR DE LA TRIVIA {gamers[0]["username"]} CON {gamers[0]["trivia_score"]} PUNTOS"""
+        if won_trivia_games(lobby_id,gamers[0]["telegram_id"]):
+            return in_order
+    return False
+
+def won_trivia_games(lobby_id,tel_id):
+    data_check = {"tel_id": tel_id, "lobby_id": lobby_id}
+    users = requests.get(f'{api_url}user_created/', data_check)
+    user = list(users.json())[0]
+    print("USER:",user)
+    user_id = user["id"]
+    data = {
+        "username": user["username"],
+        "telegram_id": user["telegram_id"],
+        "lobby": user["lobby"],
+        "won_number": user["won_number"],
+        "won_trivia": user["won_trivia"]+1,
+        "won_third": user["won_third"],
+        "number_tries": user["number_tries"],
+        "trivia_score": user["trivia_score"] 
+    }
+    print("USER DATA:",data)
+    response = requests.put(f'{api_url}users/{user_id}/', json=data)
+    print("RESTA DE INTENTOS:", response.content)
+    if response.status_code == 200:
+        return True
     return False

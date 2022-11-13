@@ -12,7 +12,7 @@ app = Flask(__name__)
 def welcome_message(item):
     if item["text"].lower() == "info":
         msg = "Hay tres juegos:\n"
-        msg += "1)NUMBERS: Conciste en adivinar el número seleccionado por el bot.\n"
+        msg += "1)NUMBERS: Consiste en adivinar el número seleccionado por el bot.\n"
         msg += "    Este Juego se inicia con el mensaje => Numbers 'max' 'intentos'.\n"
         msg += "    Max => Número maximo que puede seleccionar el bot.\n"
         msg += "    Intentos => Intentos por jugador.\n"
@@ -214,7 +214,7 @@ def set_guess_trivia_first(item):
     error = False
     msg_error = ""
     try:
-        game = api.guess_trivia_first(chat_id_str, sets.lower())
+        game = api.guess_trivia_first(chat_id_str, user_id, sets.lower())
         if game == 1:
             msg = f"Respuesta {sets} es correcta, {username}"
             send_msg(chat_id,msg)
@@ -223,7 +223,7 @@ def set_guess_trivia_first(item):
                 q_data = api.get_question_data(chat_id_str)
                 question = q_data["question"]
                 options = q_data["options"]
-                msg_question = f"<b>Pregunta {next_q+1}: {question}</b>"
+                msg_question = f"Pregunta {next_q+1}: {question}"
                 send_msg(chat_id, msg_question)
                 msg = ""
                 for i in range(len(options)):
@@ -235,6 +235,9 @@ def set_guess_trivia_first(item):
             if api.end_game_trivia_first(chat_id_str):
                 msg = f"Juego terminado."
                 send_msg(chat_id,msg)
+                stats = api.stats_per_trivia(chat_id_str)
+                if  stats != False:
+                    send_msg(chat_id,stats)
             else:
                 msg = f"Error al terminar juego."
                 send_msg(chat_id,msg)
