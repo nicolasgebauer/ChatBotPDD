@@ -79,7 +79,7 @@ def create_trivia_first(lobby_id, question_number):
         "incorrect_answer_2": question["incorrectAnswers"][1],
         "incorrect_answer_3": question["incorrectAnswers"][2],
         "question": question["question"],
-        "actual_question": 1
+        "actual_question": 0
     }
     data_check = {"lobby_id": lobby_id}
     active_number_games = requests.get(f'{api_url}gamenumber_active/', data_check)
