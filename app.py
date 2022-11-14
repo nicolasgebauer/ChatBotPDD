@@ -215,6 +215,7 @@ def set_guess_trivia_first(item):
     msg_error = ""
     try:
         game = api.guess_trivia_first(chat_id_str, user_id, sets.lower())
+        print("game-->",game)
         if game == 1:
             msg = f"Respuesta {sets} es correcta, {username}"
             send_msg(chat_id,msg)
