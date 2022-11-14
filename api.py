@@ -129,6 +129,7 @@ def guess_trivia_first(lobby_id, tel_id,guess):
         correct = game[0]["correct_answer"].lower()
         print("correct:",correct)
         if guess == correct:
+            print("ACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
             if trivia_points(lobby_id,tel_id):
                 question_numbers = game[0]["questions_number"]
                 if question_numbers > 1:
