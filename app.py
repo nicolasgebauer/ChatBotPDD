@@ -282,7 +282,7 @@ def hello_word():
     return
 
 @app.route("/stats")
-def stats():
+def total_stats():
     lobbies = api.get_all_lobbies()
     c = 1
     data = {}
