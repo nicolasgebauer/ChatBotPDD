@@ -187,6 +187,8 @@ def set_trivia_first(item):
                 q_data = api.get_question_data(chat_id_str)
                 question = q_data["question"]
                 options = q_data["options"]
+                opt = q_data["opt"]
+                print("OPT: ",opt)
                 msg_good = f"Juego Trivia: First, iniciado >>> preguntas = {sets[2]}."
                 send_msg(chat_id, msg_good)
                 msg_question = f"Pregunta 1: {question}"
@@ -224,6 +226,8 @@ def set_guess_trivia_first(item):
                 q_data = api.get_question_data(chat_id_str)
                 question = q_data["question"]
                 options = q_data["options"]
+                opt = q_data["opt"]
+                print("OPT: ",opt)
                 msg_question = f"Pregunta {next_q+1}: {question}"
                 send_msg(chat_id, msg_question)
                 msg = ""
