@@ -274,14 +274,14 @@ def hello_word():
     return
 
 @app.route("/stats")
-def stats():
+def total_stats():
     lobbies = api.get_all_lobbies()
     c = 1
     data = {}
     for lobby in lobbies:
         data[c] = api.get_total_stats_per_lobby(lobby)
         c += 1
-    return data
-    
+    return render_template("stats.html", context=data)
+
 if __name__ == '__main__':
     app.run(debug=True)
