@@ -1,5 +1,5 @@
 import requests
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, render_template
 import json
 import api
 
@@ -273,5 +273,15 @@ def hello_word():
             return {'statusCode':200, 'body':'Success'}
     return
 
+@app.route("/stats")
+def stats():
+    lobbies = api.get_all_lobbies()
+    c = 1
+    data = {}
+    for lobby in lobbies:
+        data[c] = api.get_total_stats_per_lobby(lobby)
+        c += 1
+    return data
+    
 if __name__ == '__main__':
     app.run(debug=True)
