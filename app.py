@@ -292,8 +292,8 @@ def total_stats():
     trivia_data = {}
     for lobby in lobbies:
         total_data[c] = api.get_total_stats_per_lobby(lobby)
-        numbers_data[c] = api.get_stats(lobby)
-        trivia_data[c] = api.get_trivia_stats(lobby)
+        numbers_data[c] = api.get_number_stats_per_lobby(lobby)
+        trivia_data[c] = api.get_trivia_stats_per_lobby(lobby)
         c += 1
     return render_template("stats.html", total_data=total_data, numbers_data = numbers_data, trivia_data = trivia_data)
 
