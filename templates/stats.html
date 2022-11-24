@@ -10,13 +10,13 @@
     <h1>Estadísticas por lobby</h1>
     {% for x in context %}
         <h2>Lobby {{x}}</h2>
-        <span style="padding-left:2em">Puntaje total:</span>
+        <p><span style="padding-left:2em">Puntaje total:</span></p>
         {% for user in context[x] %}
-            <span style="padding-left:4em">{{user.username}}: {{user.won_number + user.won_trivia + user.won_third}}</span>
+            <p><span style="padding-left:4em">{{user.username}}: {{user.won_number + user.won_trivia + user.won_third}}</span></p>
         {% endfor %}
-        <span style="padding-left:2em">Puntaje numbers:</span>
-        <span style="padding-left:2em">Puntaje trivia:</span>
-        <span style="padding-left:2em">Puntaje tercero:</span>
+        <p><span style="padding-left:2em">Puntaje numbers:</span></p>
+        <p><span style="padding-left:2em">Puntaje trivia:</span></p>
+        <p><span style="padding-left:2em">Puntaje tercero:</span></p>
     {% endfor %}
 </body>
 </html>
