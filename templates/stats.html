@@ -12,6 +12,9 @@
     <h2>{{context[2][0].username}}</h2>
     {% for x in context %}
         <p>{{x}}</p>
+        {% for user in context[x] %}
+            <p>{{user}}</p>
+        {% endfor %}
     {% endfor %}
 </body>
 </html>
