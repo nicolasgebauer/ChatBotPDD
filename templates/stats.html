@@ -8,11 +8,10 @@
 </head>
 <body>
     <h1>Estadísticas por lobby</h1>
-    <h2>{{context}}</h2>
     {% for x in context %}
         <p>{{x}}</p>
         {% for user in context[x] %}
-            <p>{{user}}</p>
+            <p>{{user.username}}: {{user.won_number + user.won_trivia + user.won_third}}</p>
         {% endfor %}
     {% endfor %}
 </body>
