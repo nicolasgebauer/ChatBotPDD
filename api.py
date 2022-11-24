@@ -381,3 +381,16 @@ def won_trivia_games(lobby_id,tel_id):
     if response.status_code == 200:
         return True
     return False
+
+def get_all_lobbies():
+    response = requests.get(f'{api_url}get_all_lobbies/')
+    if response.status_code == 200:
+        return response.json()
+    return False
+
+def get_total_stats_per_lobby(lobby_id):
+    data_check = {"lobby_id": lobby_id}
+    response = requests.get(f'{api_url}get_total_stats_per_lobby/', data_check)
+    if response.status_code == 200:
+        return response.json()
+    return False
