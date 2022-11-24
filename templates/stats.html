@@ -10,10 +10,13 @@
     <h1>Estadísticas por lobby</h1>
     {% for x in context %}
         <h2>Lobby {{x}}</h2>
-        <p>     Puntaje total:</p>
+        <span style="padding-left:2em">Puntaje total:</span>
         {% for user in context[x] %}
-            <p>         {{user.username}}: {{user.won_number + user.won_trivia + user.won_third}}</p>
+            <span style="padding-left:4em">{{user.username}}: {{user.won_number + user.won_trivia + user.won_third}}</span>
         {% endfor %}
+        <p>Puntaje numbers:</p>
+        <p>Puntaje trivia:</p>
+        <p>Puntaje tercero:</p>
     {% endfor %}
 </body>
 </html>
