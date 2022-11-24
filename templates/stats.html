@@ -14,9 +14,9 @@
         {% for user in context[x] %}
             <span style="padding-left:4em">{{user.username}}: {{user.won_number + user.won_trivia + user.won_third}}</span>
         {% endfor %}
-        <p>Puntaje numbers:</p>
-        <p>Puntaje trivia:</p>
-        <p>Puntaje tercero:</p>
+        <span style="padding-left:2em">Puntaje numbers:</span>
+        <span style="padding-left:2em">Puntaje trivia:</span>
+        <span style="padding-left:2em">Puntaje tercero:</span>
     {% endfor %}
 </body>
 </html>
