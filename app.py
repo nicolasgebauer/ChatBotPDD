@@ -287,11 +287,15 @@ def hello_word():
 def total_stats():
     lobbies = api.get_all_lobbies()
     c = 1
-    data = {}
+    total_data = {}
+    numbers_data = {}
+    trivia_data = {}
     for lobby in lobbies:
-        data[c] = api.get_total_stats_per_lobby(lobby)
+        total_data[c] = api.get_total_stats_per_lobby(lobby)
+        numbers_data[c] = api.get_stats(lobby)
+        trivia_data[c] = api.get_trivia_stats(lobby)
         c += 1
-    return render_template("stats.html", context=data)
+    return render_template("stats.html", total_data=total_data, numbers_data = numbers_data, trivia_data = trivia_data)
 
 if __name__ == '__main__':
     app.run(debug=True)

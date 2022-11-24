@@ -8,14 +8,20 @@
 </head>
 <body>
     <h1>Estadísticas por lobby</h1>
-    {% for x in context %}
+    {% for x in total_data %}
         <h2>Lobby {{x}}</h2>
         <p><span style="padding-left:2em">Puntaje total:</span></p>
-        {% for user in context[x] %}
+        {% for user in total_data[x] %}
             <p><span style="padding-left:4em">{{user.username}}: {{user.won_number + user.won_trivia + user.won_third}}</span></p>
         {% endfor %}
         <p><span style="padding-left:2em">Puntaje numbers:</span></p>
+        {% for user in numbers_data[x] %}
+            <p><span style="padding-left:4em">{{user.username}}: {{user.won_number}}</span></p>
+        {% endfor %}
         <p><span style="padding-left:2em">Puntaje trivia:</span></p>
+        {% for user in trivia_data[x] %}
+            <p><span style="padding-left:4em">{{user.username}}: {{user.won_trivia}}</span></p>
+        {% endfor %}
         <p><span style="padding-left:2em">Puntaje tercero:</span></p>
     {% endfor %}
 </body>
