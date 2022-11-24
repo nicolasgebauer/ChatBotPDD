@@ -289,7 +289,7 @@ def stats():
     for lobby in lobbies:
         data[c] = api.get_total_stats_per_lobby(lobby)
         c += 1
-    return data
-    
+    return render_template("stats.html", context=data)
+
 if __name__ == '__main__':
     app.run(debug=True)
