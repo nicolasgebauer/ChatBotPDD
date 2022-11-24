@@ -27,9 +27,13 @@ def get_question_data(lobby_id):
     game = list(active_games.json())[0]
     options = [game["correct_answer"], game["incorrect_answer_1"], game["incorrect_answer_2"], game["incorrect_answer_3"]]
     random.shuffle(options)
+    opt = {}
+    for i in range(4):
+        opt[chr(97+i)] = options[i]
     data_return = {
         "question": game["question"],
-        "options": options
+        "options": options,
+        "opt": opt
     }
     return data_return
 
@@ -129,9 +133,12 @@ def guess_trivia_first(lobby_id, tel_id,guess):
         correct = game[0]["correct_answer"].lower()
         print("correct:",correct)
         if guess == correct:
+            print("ACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
             if trivia_points(lobby_id,tel_id):
+                print("ACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA2")
                 question_numbers = game[0]["questions_number"]
                 if question_numbers > 1:
+                    print("ACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA3")
                     return 1
                 return 2
             return -1
