@@ -411,7 +411,7 @@ def get_number_stats_per_lobby(lobby_id):
 
 def get_trivia_stats_per_lobby(lobby_id):
     data_check = {"lobby_id": lobby_id}
-    response = requests.get(f'{api_url}get_trivia_stats/', data_check)
+    response = requests.get(f'{api_url}get_trivia_stats_by_lobby/', data_check)
     if response.status_code == 200:
         return response.json()
     return False
