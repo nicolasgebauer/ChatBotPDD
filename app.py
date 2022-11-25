@@ -216,42 +216,43 @@ def set_guess_trivia_first(item):
     error = False
     msg_error = ""
     try:
-        if ord(sets.lower()) >= 97 and ord(sets.lower()) <= 100:
-            q_data = api.get_question_data(chat_id_str)
-            question = q_data["question"]
-            options = q_data["options"]
-            opt = q_data["opt"]
-            print("OPT: ",opt)
-            game = api.guess_trivia_first(chat_id_str, user_id, opt[sets.lower()])
-            print("game-->",game)
-            if game == 1:
-                msg = f"Respuesta {sets} es correcta, {username}"
+        guess = sets.lower()
+        # if guess == "a" or guess == "b" or guess == "c" or guess == "d":
+        q_data = api.get_question_data(chat_id_str)
+        question = q_data["question"]
+        options = q_data["options"]
+        opt = q_data["opt"]
+        print("OPT: ",opt)
+        game = api.guess_trivia_first(chat_id_str, user_id, sets.lower())
+        print("game-->",game)
+        if game == 1:
+            msg = f"Respuesta {sets} es correcta, {username}"
+            send_msg(chat_id,msg)
+            next_q = api.next_question_game_trivia_first(chat_id_str)
+            if next_q != False:
+                q_data = api.get_question_data(chat_id_str)
+                question = q_data["question"]
+                options = q_data["options"]
+                opt = q_data["opt"]
+                print("OPT: ",opt)
+                msg_question = f"Pregunta {next_q+1}: {question}"
+                send_msg(chat_id, msg_question)
+                msg = ""
+                for i in range(len(options)):
+                    msg += f"{chr(i+97)}) {options[i]}\n"
+                send_msg(chat_id_str,msg)
+        elif game ==2:
+            msg = f"Respuesta {sets} es correcta, {username}"
+            send_msg(chat_id,msg)
+            if api.end_game_trivia_first(chat_id_str):
+                msg = f"Juego terminado."
                 send_msg(chat_id,msg)
-                next_q = api.next_question_game_trivia_first(chat_id_str)
-                if next_q != False:
-                    q_data = api.get_question_data(chat_id_str)
-                    question = q_data["question"]
-                    options = q_data["options"]
-                    opt = q_data["opt"]
-                    print("OPT: ",opt)
-                    msg_question = f"Pregunta {next_q+1}: {question}"
-                    send_msg(chat_id, msg_question)
-                    msg = ""
-                    for i in range(len(options)):
-                        msg += f"{chr(i+97)}) {options[i]}\n"
-                    send_msg(chat_id_str,msg)
-            elif game ==2:
-                msg = f"Respuesta {sets} es correcta, {username}"
+                stats = api.stats_per_trivia(chat_id_str)
+                if  stats != False:
+                    send_msg(chat_id,stats)
+            else:
+                msg = f"Error al terminar juego."
                 send_msg(chat_id,msg)
-                if api.end_game_trivia_first(chat_id_str):
-                    msg = f"Juego terminado."
-                    send_msg(chat_id,msg)
-                    stats = api.stats_per_trivia(chat_id_str)
-                    if  stats != False:
-                        send_msg(chat_id,stats)
-                else:
-                    msg = f"Error al terminar juego."
-                    send_msg(chat_id,msg)
     except:
         msg = f"Respuesta NO recibida, {username}"
         send_msg(chat_id,msg)
