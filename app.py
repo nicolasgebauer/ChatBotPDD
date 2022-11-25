@@ -313,7 +313,7 @@ def sendTextWithButtons(chat_id, answer, keyboard):
         'payload': json.dumps(pay_data)
     }
     
-    to_url = f'https://api.telegram.org/bot{TOKEN}/{urllib.parse.urlencode(data)}'
+    to_url = f'https://api.telegram.org/bot{TOKEN}/post?payload?chat_id={chat_id}&text={answer}&reply_markup={keyboard}'
     print(to_url)
     resp = requests.get(to_url)
 
