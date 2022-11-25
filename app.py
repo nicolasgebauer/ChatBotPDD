@@ -310,12 +310,12 @@ def sendTextWithButtons(chat_id, answer, keyboard):
     }
     data = {
         'method': 'post',
-        'payload': json.dumps(pay_data)
+        'payload': pay_data
     }
     
     to_url = f'https://api.telegram.org/bot{TOKEN}/'
     print(to_url)
-    resp = requests.post(to_url, params=data)
+    resp = requests.get(to_url, json=data)
 
 def setKeyboard(options):
     keyboard = {
