@@ -300,9 +300,6 @@ def total_stats():
         c += 1
     return render_template("stats.html", total_data=total_data, numbers_data = numbers_data, trivia_data = trivia_data)
 
-if __name__ == '__main__':
-    app.run(debug=True)
-
 def sendTextWithButtons(chat_id, answer, keyboard):
     data = {
         'method': 'post',
@@ -322,21 +319,24 @@ def setKeyboard(options):
         'inline_keyboard': [
             [{
                 'text': 'A',
-                'callback_data': f'{options[0]}'
+                'callback_data': options[0]
             }],
             [{
                 'text': 'B',
-                'callback_data': f'{options[1]}'
+                'callback_data': options[1]
             }]
             [{
                 'text': 'C',
-                'callback_data': f'{options[2]}'
+                'callback_data': options[2]
             }],
             [{
                 'text': 'D',
-                'callback_data': f'{options[3]}'
+                'callback_data': options[3]
             }]
         ]
     }
     print("keyboard before json:",keyboard)
     return json.dumps(keyboard)
+
+if __name__ == '__main__':
+    app.run()
