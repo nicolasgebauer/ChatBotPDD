@@ -235,6 +235,7 @@ def set_guess_trivia_first(item):
                 msg_question = f"Pregunta {next_q+1}: {question}"
                 send_msg(chat_id, msg_question)
                 keyboard = setKeyboard(options)
+                print(keyboard)
                 sendTextWithButtons(chat_id, msg_question, keyboard)
                 #send_msg(chat_id, msg_question)
                 #msg = ""
@@ -312,6 +313,7 @@ def sendTextWithButtons(chat_id, answer, keyboard):
         }
     }
     to_url = f'https://api.telegram.org/bot{TOKEN}/{data}'
+    print(to_url)
     resp = requests.get(to_url)
 
 def setKeyboard(options):
