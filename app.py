@@ -190,6 +190,7 @@ def set_trivia_first(item):
                 msg_good = f"Juego Trivia: First, iniciado >>> preguntas = {sets[2]}."
                 send_msg(chat_id, msg_good)
                 msg_question = f"Pregunta 1: {question}"
+                send_msg(chat_id, msg_question)
                 keyboard = setKeyboard(options)
                 sendTextWithButtons(chat_id, msg_question, keyboard)
                 #send_msg(chat_id, msg_question)
