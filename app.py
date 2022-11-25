@@ -324,7 +324,7 @@ def setKeyboard(options):
             [{
                 'text': 'B',
                 'callback_data': options[1]
-            }]
+            }],
             [{
                 'text': 'C',
                 'callback_data': options[2]
