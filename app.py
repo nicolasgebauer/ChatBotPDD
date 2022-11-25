@@ -304,7 +304,7 @@ def total_stats():
 def sendTextWithButtons(chat_id, answer, keyboard):
     pay_data = {
         'method': 'sendMessage',
-        'chat_id': str(chat_id),
+        'chat_id': chat_id,
         'text': answer,
         'reply_markup': keyboard
     }
