@@ -233,7 +233,7 @@ def set_guess_trivia_first(item):
                 question = q_data["question"]
                 options = q_data["options"]
                 msg_question = f"Pregunta {next_q+1}: {question}"
-                msg_question = f"Pregunta 1: {question}"
+                send_msg(chat_id, msg_question)
                 keyboard = setKeyboard(options)
                 sendTextWithButtons(chat_id, msg_question, keyboard)
                 #send_msg(chat_id, msg_question)
