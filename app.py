@@ -313,9 +313,9 @@ def sendTextWithButtons(chat_id, answer, keyboard):
         'payload': json.dumps(pay_data)
     }
     
-    to_url = f'https://api.telegram.org/bot{TOKEN}/method=post&payload?method=sendMessage&chat_id={chat_id}&text={answer}&reply_markup={keyboard}'
+    to_url = f'https://api.telegram.org/bot{TOKEN}/'
     print(to_url)
-    resp = requests.get(to_url)
+    resp = requests.post(to_url, params=data)
 
 def setKeyboard(options):
     keyboard = {
