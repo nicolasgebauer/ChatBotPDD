@@ -27,13 +27,9 @@ def get_question_data(lobby_id):
     game = list(active_games.json())[0]
     options = [game["correct_answer"], game["incorrect_answer_1"], game["incorrect_answer_2"], game["incorrect_answer_3"]]
     random.shuffle(options)
-    opt = {}
-    for i in range(4):
-        opt[chr(97+i)]=options[i] 
     data_return = {
         "question": game["question"],
-        "options": options,
-        "opt": opt
+        "options": options
     }
     return data_return
 
