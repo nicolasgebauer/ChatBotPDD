@@ -232,11 +232,14 @@ def set_guess_trivia_first(item):
                 question = q_data["question"]
                 options = q_data["options"]
                 msg_question = f"Pregunta {next_q+1}: {question}"
-                send_msg(chat_id, msg_question)
-                msg = ""
-                for i in range(len(options)):
-                    msg += f"{chr(i+97)}) {options[i]}\n"
-                send_msg(chat_id_str,msg)
+                keyboard = setKeyboard(options)
+                sendTextWithButtons(chat_id, msg_question, keyboard)
+                #msg_question = f"Pregunta {next_q+1}: {question}"
+                #send_msg(chat_id, msg_question)
+                #msg = ""
+                #for i in range(len(options)):
+                #    msg += f"{chr(i+97)}) {options[i]}\n"
+                #send_msg(chat_id_str,msg)
         elif game ==2:
             msg = f"Respuesta {sets} es correcta, {username}"
             send_msg(chat_id,msg)
