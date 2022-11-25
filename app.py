@@ -302,14 +302,15 @@ def total_stats():
     return render_template("stats.html", total_data=total_data, numbers_data = numbers_data, trivia_data = trivia_data)
 
 def sendTextWithButtons(chat_id, answer, keyboard):
-    data = {
-        'method': 'post',
-        'payload': {
+    pay_data = {
         'method': 'sendMessage',
         'chat_id': str(chat_id),
         'text': answer,
         'reply_markup': keyboard
-        }
+    }
+    data = {
+        'method': 'post',
+        'payload': json.dumps(pay_data)
     }
     
     to_url = f'https://api.telegram.org/bot{TOKEN}/{urllib.parse.urlencode(data)}'
