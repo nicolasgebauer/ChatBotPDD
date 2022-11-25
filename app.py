@@ -192,10 +192,12 @@ def set_trivia_first(item):
                 msg_good = f"Juego Trivia: First, iniciado >>> preguntas = {sets[2]}."
                 send_msg(chat_id, msg_good)
                 msg_question = f"Pregunta 1: {question}"
-                send_msg(chat_id, msg_question)
-                msg = ""
-                for i in range(len(options)):
-                    msg += f"{chr(i+97)}) {options[i]}\n"
+                keyboard = setKeyboard(options)
+                sendTextWithButtons(chat_id, msg_question, keyboard)
+                #send_msg(chat_id, msg_question)
+                #msg = ""
+                #for i in range(len(options)):
+                #    msg += f"{chr(i+97)}) {options[i]}\n"
             elif game == 2:
                 msg = "Ya existe un juego activo."
             else:
@@ -235,11 +237,13 @@ def set_guess_trivia_first(item):
                     opt = q_data["opt"]
                     print("OPT: ",opt)
                     msg_question = f"Pregunta {next_q+1}: {question}"
-                    send_msg(chat_id, msg_question)
-                    msg = ""
-                    for i in range(len(options)):
-                        msg += f"{chr(i+97)}) {options[i]}\n"
-                    send_msg(chat_id_str,msg)
+                    keyboard = setKeyboard(options)
+                    sendTextWithButtons(chat_id, msg_question, keyboard)
+                    #send_msg(chat_id, msg_question)
+                    #msg = ""
+                    #for i in range(len(options)):
+                    #    msg += f"{chr(i+97)}) {options[i]}\n"
+                    #send_msg(chat_id_str,msg)
             elif game ==2:
                 msg = f"Respuesta {sets} es correcta, {username}"
                 send_msg(chat_id,msg)
@@ -299,3 +303,39 @@ def total_stats():
 
 if __name__ == '__main__':
     app.run(debug=True)
+
+def sendTextWithButtons(chat_id, answer, keyboard):
+    data = {
+        'method': 'post',
+        'payload': {
+        'method': 'sendMessage',
+        'chat_id': str(chat_id),
+        'text': answer,
+        'reply_markup': keyboard
+        }
+    }
+    to_url = f'https://api.telegram.org/bot{TOKEN}/{data}'
+    resp = requests.get(to_url)
+
+def setKeyboard(options):
+    keyboard = {
+        'inline_keyboard': [
+            [{
+                'text': 'A',
+                'callback_data': f'{options[0]}'
+            }],
+            [{
+                'text': 'B',
+                'callback_data': f'{options[1]}'
+            }]
+            [{
+                'text': 'C',
+                'callback_data': f'{options[2]}'
+            }],
+            [{
+                'text': 'D',
+                'callback_data': f'{options[3]}'
+            }]
+        ]
+    }
+    return json.dumps(keyboard)
