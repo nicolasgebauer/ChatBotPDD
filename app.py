@@ -217,13 +217,13 @@ def set_guess_trivia_first(item):
     msg_error = ""
     try:
         guess = sets.lower()
-        # if guess == "a" or guess == "b" or guess == "c" or guess == "d":
+        #if guess == "a" or guess == "b" or guess == "c" or guess == "d":
         q_data = api.get_question_data(chat_id_str)
         question = q_data["question"]
         options = q_data["options"]
         opt = q_data["opt"]
         print("OPT: ",opt)
-        game = api.guess_trivia_first(chat_id_str, user_id, sets.lower())
+        game = api.guess_trivia_first(chat_id_str, user_id, sets.lower(), opt[sets.lower()])
         print("game-->",game)
         if game == 1:
             msg = f"Respuesta {sets} es correcta, {username}"

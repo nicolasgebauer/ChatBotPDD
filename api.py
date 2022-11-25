@@ -100,12 +100,13 @@ def create_trivia_first(lobby_id, question_number):
             return 1
     return 3
 
-def guess_number(lobby_id, guess):
+def guess_number(lobby_id, guess, other):
     data_check = {"lobby_id": lobby_id}
     active_games = requests.get(f'{api_url}gamenumber_active/', data_check)
     game = list(active_games.json())
     if len(game) > 0:
         print("guess:", guess)
+        print("guess1:", other)
         print("game:", game)
         number = game[0]["number"]
         print("number:",number)
