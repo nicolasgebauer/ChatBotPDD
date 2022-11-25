@@ -2,6 +2,7 @@ import requests
 from flask import Flask, jsonify, request, render_template
 import json
 import api
+import urllib
 
 TOKEN = '5716588187:AAH_kxlWI2GGSbmHEAANh53CGgvOfkBfNWM'
 api_url = 'https://apipds4.herokuapp.com/'
@@ -310,7 +311,8 @@ def sendTextWithButtons(chat_id, answer, keyboard):
         'reply_markup': keyboard
         }
     }
-    to_url = f'https://api.telegram.org/bot{TOKEN}/{data}'
+    
+    to_url = f'https://api.telegram.org/bot{TOKEN}/{urllib.parse.urlencode(data)}'
     print(to_url)
     resp = requests.get(to_url)
 
