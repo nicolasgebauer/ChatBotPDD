@@ -191,7 +191,9 @@ def set_trivia_first(item):
                 send_msg(chat_id, msg_good)
                 msg_question = f"Pregunta 1: {question}"
                 send_msg(chat_id, msg_question)
+                print("options:", options)
                 keyboard = setKeyboard(options)
+                print("keyboard after json:",keyboard)
                 sendTextWithButtons(chat_id, msg_question, keyboard)
                 #send_msg(chat_id, msg_question)
                 #msg = ""
@@ -235,7 +237,6 @@ def set_guess_trivia_first(item):
                 msg_question = f"Pregunta {next_q+1}: {question}"
                 send_msg(chat_id, msg_question)
                 keyboard = setKeyboard(options)
-                print(keyboard)
                 sendTextWithButtons(chat_id, msg_question, keyboard)
                 #send_msg(chat_id, msg_question)
                 #msg = ""
@@ -337,4 +338,5 @@ def setKeyboard(options):
             }]
         ]
     }
+    print("keyboard before json:",keyboard)
     return json.dumps(keyboard)
