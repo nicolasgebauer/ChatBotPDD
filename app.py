@@ -223,7 +223,7 @@ def set_guess_trivia_first(item):
         options = q_data["options"]
         opt = q_data["opt"]
         print("OPT: ",opt)
-        game = api.guess_trivia_first(chat_id_str, user_id, sets.lower(), opt[sets.lower()])
+        game = api.guess_trivia_first(chat_id_str, user_id, sets.lower())
         print("game-->",game)
         if game == 1:
             msg = f"Respuesta {sets} es correcta, {username}"
