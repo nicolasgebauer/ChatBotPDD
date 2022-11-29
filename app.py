@@ -269,8 +269,8 @@ def hello_word():
         data = request.get_json()
         print(f'DATA: {data}')
         if 'callback_query' in data:
-            msg = data["message"]["data"]
-            chat_id = data["message"]["chat"]["id"]
+            msg = data["callback_query"]["message"]["data"]
+            chat_id = data["callback_query"]["message"]["chat"]["id"]
             send_msg(chat_id, msg)
         if "message" in data:
             data = data["message"]
