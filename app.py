@@ -315,7 +315,7 @@ def sendTextWithButtons(chat_id, answer, keyboard):
     #https://api.telegram.org/bot[TOKEN]/sendMessage?chat_id=[CHAT_ID]&text=[TEXT]&reply_markup={"inline_keyboard": [[{"text": "hi", "callback_data": "hi"}]]}
     to_url = f'https://api.telegram.org/bot{TOKEN}/sendMessage?chat_id={chat_id}&text={answer}&reply_markup={keyboard}'
     print(to_url)
-    resp = requests.post(to_url, json=data)
+    resp = requests.get(to_url, json=data)
     print(resp.text)
 
 def setKeyboard(options):
