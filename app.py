@@ -48,7 +48,7 @@ def is_game_numbers_active(item):
         set_guess(item)
 
 def is_game_trivia_first_active(item):
-    chat_id = item["chat"]["id"]
+    chat_id = item["chat_id"]
     chat_id_str = str(chat_id)
     if api.get_game_trivia_first_active(chat_id_str):
         set_guess_trivia_first(item)
@@ -212,10 +212,10 @@ def set_trivia_first(item):
 
 def set_guess_trivia_first(item):
     sets = str(item["text"])
-    chat_id = item["chat"]["id"]
+    chat_id = item["chat_id"]
     chat_id_str = str(chat_id)
-    user_id = str(item["from"]["id"])
-    username = item["from"]["first_name"]
+    user_id = str(item["user_id"])
+    username = item["username"]
     error = False
     msg_error = ""
     try:
@@ -269,9 +269,13 @@ def hello_word():
         data = request.get_json()
         print(f'DATA: {data}')
         if 'callback_query' in data:
-            msg = data["callback_query"]["data"]
-            chat_id = data["callback_query"]["message"]["chat"]["id"]
-            send_msg(chat_id, msg)
+            data = {
+                "text": data["callback_query"]["data"],
+                "chat_id": data["callback_query"]["message"]["chat"]["id"],
+                "user_id": data["callback_query"]["from"]["id"],
+                "username": data["callback_query"]["from"]["first_name"]              
+            }
+            is_game_trivia_first_active(data)
         if "message" in data:
             data = data["message"]
             print(data)
@@ -280,7 +284,6 @@ def hello_word():
                 set_numbers(data)
                 set_trivia_first(data)
                 is_game_numbers_active(data)
-                is_game_trivia_first_active(data)
                 create_user(data)
                 stats(data)
                 return {"statusCode": 200, "body": "Success", "data": data}
