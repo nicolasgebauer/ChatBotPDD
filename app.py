@@ -195,11 +195,10 @@ def set_trivia_first(item):
                 print("options:", options)
                 keyboard = setKeyboard(options)
                 print("keyboard after json:",keyboard)
-                sendTextWithButtons(chat_id, msg_question, keyboard)
-                #send_msg(chat_id, msg_question)
-                #msg = ""
-                #for i in range(len(options)):
-                #    msg += f"{chr(i+97)}) {options[i]}\n"
+                msg_options = ""
+                for i in range(len(options)):
+                   msg_options += f"{chr(i+97)}) {options[i]}\n"
+                sendTextWithButtons(chat_id, msg_options, keyboard)
             elif game == 2:
                 msg = "Ya existe un juego activo."
             else:
