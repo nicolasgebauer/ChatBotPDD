@@ -170,10 +170,13 @@ def stats(item):
         total = api.get_total_stats(chat_id_str)
         result_1 = api.get_numbers_stats(chat_id_str)
         result_2 = api.get_trivia_stats(chat_id_str)
+        result_3 = api.get_third_stats(chat_id_str)
         msg = f"Para mas detalles ingrese al link.\n{stats_link}"
-        if  result_1 != False and result_2 != False:
+        if  result_1 != False and result_2 != False and result_3 != False and total != False:
+            send_msg(chat_id, total)
             send_msg(chat_id, result_1)
             send_msg(chat_id, result_2)
+            send_msg(chat_id, result_3)
             send_msg(chat_id, msg)
         else:
             msg = "Error al conseguir las estadísticas."
