@@ -259,7 +259,7 @@ def end_game_numbers(lobby_id):
         return game[0]["number"]
     return False
 
-def get_stats(lobby_id):
+def get_numbers_stats(lobby_id):
     data_check = {"lobby_id": lobby_id}
     response = requests.get(f'{api_url}get_stat_lobby/', data_check)
     print("ORDEN DE JUGADORES:", response.content)
@@ -283,6 +283,34 @@ def get_trivia_stats(lobby_id):
         gamers = response.json()
         for item in gamers:
             in_order += f"""%0A    {count+1}- {item["username"]}: {item["won_trivia"]} ganados"""
+            count += 1
+        return in_order
+    return False
+
+def get_third_stats(lobby_id):
+    data_check = {"lobby_id": lobby_id}
+    response = requests.get(f'{api_url}get_third_stats_per_lobby/', data_check)
+    print("ORDEN DE JUGADORES:", response.content)
+    in_order = "Estadisticas Math:"
+    count = 0
+    if response.status_code == 200:
+        gamers = response.json()
+        for item in gamers:
+            in_order += f"""%0A    {count+1}- {item["username"]}: {item["won_third"]} ganados"""
+            count += 1
+        return in_order
+    return False
+
+def get_total_stats(lobby_id):
+    data_check = {"lobby_id": lobby_id}
+    response = requests.get(f'{api_url}get_total_stats_per_lobby/', data_check)
+    print("ORDEN DE JUGADORES:", response.content)
+    in_order = "Estadisticas totales:"
+    count = 0
+    if response.status_code == 200:
+        gamers = response.json()
+        for item in gamers:
+            in_order += f"""%0A    {count+1}- {item["username"]}: {item["won_third"] + item["won_trivia"] + item["won_number"]} ganados"""
             count += 1
         return in_order
     return False
@@ -375,6 +403,29 @@ def won_trivia_games(lobby_id,tel_id):
         "won_number": user["won_number"],
         "won_trivia": user["won_trivia"]+1,
         "won_third": user["won_third"],
+        "number_tries": user["number_tries"],
+        "trivia_score": user["trivia_score"] 
+    }
+    print("USER DATA:",data)
+    response = requests.put(f'{api_url}users/{user_id}/', json=data)
+    print("RESTA DE INTENTOS:", response.content)
+    if response.status_code == 200:
+        return True
+    return False
+
+def won_third_game(lobby_id,tel_id):
+    data_check = {"tel_id": tel_id, "lobby_id": lobby_id}
+    users = requests.get(f'{api_url}user_created/', data_check)
+    user = list(users.json())[0]
+    print("USER:",user)
+    user_id = user["id"]
+    data = {
+        "username": user["username"],
+        "telegram_id": user["telegram_id"],
+        "lobby": user["lobby"],
+        "won_number": user["won_number"],
+        "won_trivia": user["won_trivia"],
+        "won_third": user["won_third"]+1,
         "number_tries": user["number_tries"],
         "trivia_score": user["trivia_score"] 
     }

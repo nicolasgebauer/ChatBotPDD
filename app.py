@@ -166,11 +166,15 @@ def stats(item):
     chat_id = item["chat"]["id"]
     chat_id_str = str(chat_id)
     if item["text"].lower() == "stats":
-        result_1 = api.get_stats(chat_id_str)
+        total = api.get_total_stats(chat_id_str)
+        result_1 = api.get_numbers_stats(chat_id_str)
         result_2 = api.get_trivia_stats(chat_id_str)
-        if  result_1 != False and result_2 != False:
+        result_3 = api.get_all_lobbies(chat_id_str)
+        if  result_1 != False and result_2 != False and result_3 != False and total != False:
+            send_msg(chat_id, total)
             send_msg(chat_id, result_1)
             send_msg(chat_id, result_2)
+            send_msg(chat_id, result_3)
         else:
             msg = "Error al conseguir las estadísticas."
             send_msg(chat_id, msg)
