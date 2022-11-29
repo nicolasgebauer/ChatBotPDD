@@ -6,6 +6,7 @@ import urllib
 
 TOKEN = '5716588187:AAH_kxlWI2GGSbmHEAANh53CGgvOfkBfNWM'
 api_url = 'https://apipds4.herokuapp.com/'
+stats_link = "https://pdd-games.herokuapp.com/stats"
 # https://api.telegram.org/bot5670463206:AAEoQE14qn2_TqV0qmyyRK5kgDv-BJmDxto/setWebhook?url=https://pdd-games.herokuapp.com
 # https://api.telegram.org/bot5716588187:AAH_kxlWI2GGSbmHEAANh53CGgvOfkBfNWM/setWebhook?url=https://pdd-games.herokuapp.com
 app = Flask(__name__)
@@ -168,6 +169,7 @@ def stats(item):
     if item["text"].lower() == "stats":
         result_1 = api.get_stats(chat_id_str)
         result_2 = api.get_trivia_stats(chat_id_str)
+        msg = f"Para mas detalles ingrese al link.\n{stats_link}"
         if  result_1 != False and result_2 != False:
             send_msg(chat_id, result_1)
             send_msg(chat_id, result_2)
