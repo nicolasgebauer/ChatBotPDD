@@ -268,6 +268,10 @@ def hello_word():
     if request.method == 'POST':
         data = request.get_json()
         print(f'DATA: {data}')
+        if 'callback_query' in data:
+            msg = data["text"]
+            chat_id = data["chat"]["id"]
+            send_msg(chat_id, msg)
         if "message" in data:
             data = data["message"]
             print(data)
@@ -312,8 +316,7 @@ def sendTextWithButtons(chat_id, answer, keyboard):
         'payload': pay_data
     }
     #https://api.telegram.org/bot[TOKEN]/sendMessage?chat_id=[CHAT_ID]&text=[TEXT]&reply_markup={"inline_keyboard": [[{"text": "hi", "callback_data": "hi"}]]}
-    to_url = f'https://api.telegram.org/bot{TOKEN}/sendMessage?chat_id={chat_id}&text={answer}&payload={data}'
-    print(to_url)
+    to_url = f'https://api.telegram.org/bot{TOKEN}/sendMessage?chat_id={chat_id}&text={answer}&reply_markup={keyboard}'
     resp = requests.get(to_url, json=data)
     print("RESPUESTA:", resp.text)
 
