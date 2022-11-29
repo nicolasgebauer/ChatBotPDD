@@ -307,12 +307,14 @@ def total_stats():
     total_data = {}
     numbers_data = {}
     trivia_data = {}
+    third_data = {}
     for lobby in lobbies:
         total_data[c] = api.get_total_stats_per_lobby(lobby)
         numbers_data[c] = api.get_number_stats_per_lobby(lobby)
         trivia_data[c] = api.get_trivia_stats_per_lobby(lobby)
+        third_data[c] = api.get_third_stats_per_lobby(lobby)
         c += 1
-    return render_template("stats.html", total_data=total_data, numbers_data = numbers_data, trivia_data = trivia_data)
+    return render_template("stats.html", total_data=total_data, numbers_data = numbers_data, trivia_data = trivia_data, third_data = third_data)
 
 def sendTextWithButtons(chat_id, answer, keyboard):
     pay_data = {
