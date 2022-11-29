@@ -2,6 +2,7 @@ import random
 import requests
 import json
 import unicodedata
+import math_game
 
 api_url = 'https://apipds4.herokuapp.com/'
 trivia_url = "https://the-trivia-api.com/api/questions?categories=general_knowledge,geography,sport_and_leisure,science,history&limit=1&difficulty=medium"
