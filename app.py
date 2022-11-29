@@ -312,7 +312,7 @@ def sendTextWithButtons(chat_id, answer, keyboard):
         'payload': pay_data
     }
     #https://api.telegram.org/bot[TOKEN]/sendMessage?chat_id=[CHAT_ID]&text=[TEXT]&reply_markup={"inline_keyboard": [[{"text": "hi", "callback_data": "hi"}]]}
-    to_url = f'https://api.telegram.org/bot{TOKEN}/sendMessage?chat_id={chat_id}&text={answer}&reply_markup={keyboard}'
+    to_url = f'https://api.telegram.org/bot{TOKEN}/sendMessage?chat_id={chat_id}&text={answer}&payload={data}'
     print(to_url)
     resp = requests.get(to_url, json=data)
     print("RESPUESTA:", resp.text)
