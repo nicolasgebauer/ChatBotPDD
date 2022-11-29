@@ -266,8 +266,9 @@ def send_msg(chat_id, msg):
 def hello_word():
     if request.method == 'POST':
         data = request.get_json()
-        print(f'CALLBACK QUERY: {data}')
+        print(f'DATA: {data}')
         if 'callback_query' in data:
+            print(f'ES CALLBACK QUERY')
             data = {
                 "text": data["callback_query"]["data"],
                 "chat_id": data["callback_query"]["message"]["chat"]["id"],
