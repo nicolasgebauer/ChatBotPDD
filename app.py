@@ -173,6 +173,7 @@ def stats(item):
         if  result_1 != False and result_2 != False:
             send_msg(chat_id, result_1)
             send_msg(chat_id, result_2)
+            send_msg(chat_id, msg)
         else:
             msg = "Error al conseguir las estadísticas."
             send_msg(chat_id, msg)
