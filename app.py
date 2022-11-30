@@ -3,6 +3,7 @@ from flask import Flask, jsonify, request, render_template
 import json
 import api
 import urllib
+import math_game
 
 TOKEN = '5716588187:AAH_kxlWI2GGSbmHEAANh53CGgvOfkBfNWM'
 api_url = 'https://apipds4.herokuapp.com/'
@@ -265,6 +266,28 @@ def set_guess_trivia_first(item):
         msg = f"Respuesta NO recibida, {username}"
         send_msg(chat_id,msg)
 
+def set_math(item):
+    sets = item["text"].split()
+    chat_id = item["chat"]["id"]
+    chat_id_str = str(chat_id)
+    result, operation = math_game.create_math_games_params()
+    try:
+        if sets[0].lower() == "math" and len(sets) == 1:
+            game = api.create_math(chat_id_str, operation, result)
+            msg = ""
+            if game == 1:
+                msg = f"Juego math iniciado >>> resolver:\n {operation}"
+            elif game == 2:
+                msg = "Ya existe un juego activo."
+            else:
+                msg = "Error al crear un juego."
+            to_url = f'https://api.telegram.org/bot{TOKEN}/sendMessage?chat_id={chat_id}&text={msg}&parse_mode=HTML'
+            resp = requests.get(to_url)
+    except:
+        final_msg = f'Error de sintaxis para creación de juego.'
+        to_url = f'https://api.telegram.org/bot{TOKEN}/sendMessage?chat_id={chat_id}&text={final_msg}&parse_mode=HTML'
+        resp = requests.get(to_url)
+
 def send_msg(chat_id, msg):
     to_url = f'https://api.telegram.org/bot{TOKEN}/sendMessage?chat_id={chat_id}&text={msg}&parse_mode=HTML'
     resp = requests.get(to_url)
@@ -290,6 +313,7 @@ def hello_word():
                 welcome_message(data)
                 set_numbers(data)
                 set_trivia_first(data)
+                set_math(data)
                 is_game_numbers_active(data)
                 create_user(data)
                 stats(data)

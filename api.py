@@ -52,12 +52,8 @@ def create_number_game(lobby_id, max_number, tries):
     print("numero maximo:", max_number)
     print("intentos", tries)
     data = {"lobby": lobby_id, "number": rand_number, "status": 0}
-    data_check = {"lobby_id": lobby_id}
-    active_number_games = requests.get(f'{api_url}gamenumber_active/', data_check)
-    active_trivia_first_games = requests.get(f'{api_url}gametriviafirst_active/', data_check)
-    print("Activos Number:", list(active_number_games.json()))
-    print("activos trivia first:", list(active_trivia_first_games.json()))
-    if len(list(active_number_games.json())) > 0 or len(list(active_trivia_first_games.json())) > 0:
+    active_games = check_active_games(lobby_id)
+    if active_games:
         return 2 ## ya existe
     response = requests.post(f'{api_url}game_numbers/', json=data)
     print("CREACION DE JUEGO:", response.content)
@@ -82,19 +78,30 @@ def create_trivia_first(lobby_id, question_number):
         "question": question["question"],
         "actual_question": 0
     }
-    data_check = {"lobby_id": lobby_id}
-    active_number_games = requests.get(f'{api_url}gamenumber_active/', data_check)
-    active_trivia_first_games = requests.get(f'{api_url}gametriviafirst_active/', data_check)
-    print("Activos Number:", list(active_number_games.json()))
-    print("activos trivia first:", list(active_trivia_first_games.json()))
-    if len(list(active_number_games.json())) > 0 or len(list(active_trivia_first_games.json())) > 0:
-        print("result: ACA 2##########################################")
+    active_games = check_active_games(lobby_id)
+    if active_games:
         return 2 ## ya existe
     response = requests.post(f'{api_url}game_trivia_firsts/', json=data)
     print("CREACION DE JUEGO:", response.content, response.status_code)
     if response.status_code == 200:
         if set_users_points_trivia(lobby_id):
             return 1
+    return 3
+
+def create_math(lobby_id, operation, result):
+    data = {
+        "lobby": lobby_id,
+        "status": 0, 
+        "operation": operation,
+        "result": result,
+    }
+    active_games = check_active_games(lobby_id)
+    if active_games:
+        return 2 ## ya existe
+    response = requests.post(f'{api_url}game_maths/', json=data)
+    print("CREACION DE JUEGO:", response.content, response.status_code)
+    if response.status_code == 200:
+        return 1
     return 3
 
 def guess_number(lobby_id, guess):
@@ -469,4 +476,15 @@ def get_third_stats_per_lobby(lobby_id):
     response = requests.get(f'{api_url}get_third_stats_per_lobby/', data_check)
     if response.status_code == 200:
         return response.json()
+    return False
+
+def check_active_games(lobby_id):
+    data_check = {"lobby_id": lobby_id}
+    active_number_games = requests.get(f'{api_url}gamenumber_active/', data_check)
+    active_trivia_first_games = requests.get(f'{api_url}gametriviafirst_active/', data_check)
+    active_math_games = requests.get(f'{api_url}gamemath_active/', data_check)
+    print("Activos Number:", list(active_number_games.json()))
+    print("activos trivia first:", list(active_trivia_first_games.json()))
+    if len(list(active_number_games.json())) > 0 or len(list(active_trivia_first_games.json())) > 0 or len(list(active_math_games.json())) > 0:
+        return True
     return False
