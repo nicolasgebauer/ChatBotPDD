@@ -281,7 +281,8 @@ def set_math(item):
     try:
         if sets[0].lower() == "math" and len(sets) == 1:
             game = api.create_math(chat_id_str, operation, result)
-            operation.replace("+", "\+")
+            operation=operation.replace("+", "\+")
+            print(operation)
             msg = ""
             if game == 1:
                 msg = f"Juego math iniciado >>> resolver:\n{operation}="
