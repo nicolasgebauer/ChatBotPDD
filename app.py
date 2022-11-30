@@ -288,6 +288,7 @@ def set_math(item):
                 msg = f"Juego math iniciado >>> resolver:"
                 send_msg(chat_id, msg)
                 send_msg(chat_id, msg2)
+                send_msg(chat_id, "+")
             elif game == 2:
                 msg = "Ya existe un juego activo."
                 send_msg(chat_id, msg)
