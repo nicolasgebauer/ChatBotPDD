@@ -309,29 +309,29 @@ def set_math_guess(item):
             if game == 1:
                 if api.won_third_game(chat_id_str, user_id):
                     msg_correct_number_guessed = f"Correcto el resultado es {sets}."
-                    send_msg(msg_correct_number_guessed)
+                    send_msg(chat_id, msg_correct_number_guessed)
                     msg_congratulations_message = f"Felicitaciones {username} eres el ganador."
-                    send_msg(msg_congratulations_message)
+                    send_msg(chat_id, msg_congratulations_message)
                     msg_end_game = "Juego finalizado."
-                    send_msg(msg_end_game)
+                    send_msg(chat_id, msg_end_game)
                 else:
                     msg_error = "Error al subir los juegos math ganados."
                     error = True
             elif game == 2:
                 msg_upper_number_guess = f"El resultado es mayor a {sets}."
-                send_msg(msg_upper_number_guess)
+                send_msg(chat_id, msg_upper_number_guess)
             elif game == 3:
                 msg_lower_number_guess = f"El resultado es menor a {sets}."
-                send_msg(msg_lower_number_guess)
+                send_msg(chat_id, msg_lower_number_guess)
             else:
                 msg_error = "Error al intentar jugada un juego."
                 error = True
         if error:
-            send_msg(msg_error)
+            send_msg(chat_id, msg_error)
                 
     except:
         final_msg = f'Error de sintaxis en jugada.'
-        send_msg(final_msg)
+        send_msg(chat_id, final_msg)
 
 def send_msg(chat_id, msg):
     to_url = f'https://api.telegram.org/bot{TOKEN}/sendMessage?chat_id={chat_id}&text={msg}&parse_mode=HTML'
