@@ -312,12 +312,8 @@ def set_math_guess(item):
                     send_msg(msg_correct_number_guessed)
                     msg_congratulations_message = f"Felicitaciones {username} eres el ganador."
                     send_msg(msg_congratulations_message)
-                    if api.end_game_math(chat_id_str):
-                        msg_end_game = "Juego finalizado."
-                        send_msg(msg_end_game)
-                    else:
-                        msg_error = "Error al finalizar math."
-                        error = True
+                    msg_end_game = "Juego finalizado."
+                    send_msg(msg_end_game)
                 else:
                     msg_error = "Error al subir los juegos math ganados."
                     error = True

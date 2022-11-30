@@ -127,6 +127,26 @@ def guess_number(lobby_id, guess):
     else:
         return -1
 
+def guess_math_result(lobby_id, guess):
+    data_check = {"lobby_id": lobby_id}
+    active_games = requests.get(f'{api_url}gamemath_active/', data_check)
+    game = list(active_games.json())
+    if len(game) > 0:
+        print("guess:", guess)
+        print("game:", game)
+        result = game[0]["result"]
+        print("number:",result)
+        if guess < result:
+            return 2
+        elif guess > result:
+            return 3
+        else:
+            if end_game_math(lobby_id):
+                return 1
+            return -1
+    else:
+        return -1
+
 def guess_trivia_first(lobby_id, tel_id,guess):
     data_check = {"lobby_id": lobby_id}
     active_games = requests.get(f'{api_url}gametriviafirst_active/', data_check)
