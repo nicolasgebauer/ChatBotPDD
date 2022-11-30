@@ -288,7 +288,7 @@ def set_math(item):
                 msg = "Ya existe un juego activo."
             else:
                 msg = "Error al crear un juego."
-            send_msg_md(chat_id, msg)
+            send_msg(chat_id, msg)
     except:
         final_msg = f'Error de sintaxis para creación de juego.'
         send_msg(chat_id, final_msg)
@@ -334,10 +334,6 @@ def set_math_guess(item):
 
 def send_msg(chat_id, msg):
     to_url = f'https://api.telegram.org/bot{TOKEN}/sendMessage?chat_id={chat_id}&text={msg}&parse_mode=HTML'
-    resp = requests.get(to_url)
-
-def send_msg_md(chat_id, msg):
-    to_url = f'https://api.telegram.org/bot{TOKEN}/sendMessage?chat_id={chat_id}&text={msg}&parse_mode=MarkdownV2'
     resp = requests.get(to_url)
 
 @app.route("/", methods = ['GET','POST'])
