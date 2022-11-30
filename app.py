@@ -4,6 +4,7 @@ import json
 import api
 import urllib
 import math_game
+from urllib.parse import urlencode
 
 TOKEN = '5716588187:AAH_kxlWI2GGSbmHEAANh53CGgvOfkBfNWM'
 api_url = 'https://apipds4.herokuapp.com/'
@@ -281,11 +282,8 @@ def set_math(item):
     try:
         if sets[0].lower() == "math" and len(sets) == 1:
             game = api.create_math(chat_id_str, operation, result)
-            op_list = operation.split()
             msg = ""
-            msg2 = ""
-            for i in op_list:
-                msg2 += i
+            msg2 = urlencode(operation)
             if game == 1:
                 msg = f"Juego math iniciado >>> resolver:"
                 send_msg(chat_id, msg)
