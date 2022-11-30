@@ -277,6 +277,7 @@ def set_math(item):
     chat_id = item["chat"]["id"]
     chat_id_str = str(chat_id)
     result, operation = math_game.create_math_games_params()
+    print(operation)
     try:
         if sets[0].lower() == "math" and len(sets) == 1:
             game = api.create_math(chat_id_str, operation, result)
@@ -287,12 +288,10 @@ def set_math(item):
                 msg = "Ya existe un juego activo."
             else:
                 msg = "Error al crear un juego."
-            to_url = f'https://api.telegram.org/bot{TOKEN}/sendMessage?chat_id={chat_id}&text={msg}&parse_mode=HTML'
-            resp = requests.get(to_url)
+            send_msg(chat_id, msg)
     except:
         final_msg = f'Error de sintaxis para creación de juego.'
-        to_url = f'https://api.telegram.org/bot{TOKEN}/sendMessage?chat_id={chat_id}&text={final_msg}&parse_mode=HTML'
-        resp = requests.get(to_url)
+        send_msg(chat_id, final_msg)
 
 def set_math_guess(item):
     sets = str(item["text"])
