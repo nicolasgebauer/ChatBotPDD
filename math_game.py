@@ -6,7 +6,7 @@ def create_math_games_params():
     numbers_in = []
     operations_in = []
     for _ in range(4):
-        numbers_in.append(randint(1,100))
+        numbers_in.append(randint(1,50))
 
     while len(operations_in) < 3:
         ind = randint (0,2)
@@ -52,3 +52,5 @@ def is_negative_number_digit(n: str) -> bool:
          return True
      except ValueError:
          return False
+
+print(create_math_games_params())
