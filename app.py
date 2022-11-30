@@ -304,7 +304,7 @@ def set_math_guess(item):
     msg_error = ""
     try:
         if sets.isnumeric():
-            game = api.guess_number(chat_id_str, int(sets))
+            game = api.guess_math_result(chat_id_str, int(sets))
             msg = ""
             if game == 1:
                 if api.won_third_game(chat_id_str, user_id):
