@@ -283,20 +283,17 @@ def set_math(item):
         if sets[0].lower() == "math" and len(sets) == 1:
             game = api.create_math(chat_id_str, operation, result)
             operation = operation.replace("+","%2B")
+            operation = operation.replace("*","%2A")
+            operation = operation.replace("-","%2D")
+            operation = operation.replace("=","%3D")
             msg = ""
-            msg2 = f"'{operation}'"
             if game == 1:
-                msg = f"Juego math iniciado >>> resolver:"
-                send_msg(chat_id, msg)
-                send_msg(chat_id, "+")
-                send_msg(chat_id, msg2)
-                
+                msg = f"Juego math iniciado >>> resolver:\n{operation}"
             elif game == 2:
                 msg = "Ya existe un juego activo."
-                send_msg(chat_id, msg)
             else:
                 msg = "Error al crear un juego."
-                send_msg(chat_id, msg)
+            send_msg(chat_id, msg)
             
     except:
         final_msg = f'Error de sintaxis para creación de juego.'

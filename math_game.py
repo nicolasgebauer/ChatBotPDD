@@ -26,6 +26,7 @@ def create_math_games_params():
         str_ope += " "
         str_ope += str(numbers_in[i+1])
         str_ope += " "
+    str_ope += "="
 
 
     while True:
@@ -47,7 +48,7 @@ def create_math_games_params():
             numbers_in.pop(1)
         else:
             break
-    return(numbers_in[0],str_ope[:-1])        
+    return(numbers_in[0],str_ope)        
 
 def is_negative_number_digit(n: str) -> bool:
      try:
