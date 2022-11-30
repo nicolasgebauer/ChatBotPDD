@@ -55,6 +55,12 @@ def is_game_trivia_first_active(item):
     if api.get_game_trivia_first_active(chat_id_str):
         set_guess_trivia_first(item)
 
+def is_game_math_active(item):
+    chat_id = item["chat_id"]
+    chat_id_str = str(chat_id)
+    if api.get_game_math_active(chat_id_str):
+        set_math_guess(item)
+
 def set_numbers(item):
     sets = item["text"].split()
     chat_id = item["chat"]["id"]
@@ -288,6 +294,49 @@ def set_math(item):
         to_url = f'https://api.telegram.org/bot{TOKEN}/sendMessage?chat_id={chat_id}&text={final_msg}&parse_mode=HTML'
         resp = requests.get(to_url)
 
+def set_math_guess(item):
+    sets = str(item["text"])
+    chat_id = item["chat"]["id"]
+    chat_id_str = str(chat_id)
+    user_id = str(item["from"]["id"])
+    username = item["from"]["first_name"]
+    error = False
+    msg_error = ""
+    try:
+        if sets.isnumeric():
+            game = api.guess_number(chat_id_str, int(sets))
+            msg = ""
+            if game == 1:
+                if api.won_third_game(chat_id_str, user_id):
+                    msg_correct_number_guessed = f"Correcto el resultado es {sets}."
+                    send_msg(msg_correct_number_guessed)
+                    msg_congratulations_message = f"Felicitaciones {username} eres el ganador."
+                    send_msg(msg_congratulations_message)
+                    if api.end_game_math(chat_id_str):
+                        msg_end_game = "Juego finalizado."
+                        send_msg(msg_end_game)
+                    else:
+                        msg_error = "Error al finalizar math."
+                        error = True
+                else:
+                    msg_error = "Error al subir los juegos math ganados."
+                    error = True
+            elif game == 2:
+                msg_upper_number_guess = f"El resultado es mayor a {sets}."
+                send_msg(msg_upper_number_guess)
+            elif game == 3:
+                msg_lower_number_guess = f"El resultado es menor a {sets}."
+                send_msg(msg_lower_number_guess)
+            else:
+                msg_error = "Error al intentar jugada un juego."
+                error = True
+        if error:
+            send_msg(msg_error)
+                
+    except:
+        final_msg = f'Error de sintaxis en jugada.'
+        send_msg(final_msg)
+
 def send_msg(chat_id, msg):
     to_url = f'https://api.telegram.org/bot{TOKEN}/sendMessage?chat_id={chat_id}&text={msg}&parse_mode=HTML'
     resp = requests.get(to_url)
@@ -315,6 +364,7 @@ def hello_word():
                 set_trivia_first(data)
                 set_math(data)
                 is_game_numbers_active(data)
+                is_game_math_active(data)
                 create_user(data)
                 stats(data)
                 return {"statusCode": 200, "body": "Success", "data": data}

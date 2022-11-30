@@ -173,6 +173,14 @@ def get_game_trivia_first_active(lobby_id):
         return True
     return False
 
+def get_game_math_active(lobby_id):
+    data_check = {"lobby_id": lobby_id}
+    active_games = requests.get(f'{api_url}gamemath_active/', data_check)
+    game = list(active_games.json())
+    if len(game) > 0:
+        return True
+    return False
+
 def tries_down(lobby_id, tel_id):
     data_check = {"tel_id": tel_id, "lobby_id": lobby_id}
     users = requests.get(f'{api_url}user_created/', data_check)
@@ -256,17 +264,6 @@ def check_total_tries(lobby_id):
         return True
     return False
 
-def end_game_numbers(lobby_id):
-    data_check = {"lobby_id": lobby_id}
-    active_games = requests.get(f'{api_url}gamenumber_active/', data_check)
-    game = list(active_games.json())    
-    data = {"lobby":game[0]["lobby"], "number":game[0]["number"], "status":1}
-    response = requests.put(f'{api_url}game_numbers/{game[0]["id"]}/', json=data)
-    print("CAMBIO DE STATUS:", response.content)
-    if response.status_code == 200:
-        return game[0]["number"]
-    return False
-
 def get_numbers_stats(lobby_id):
     data_check = {"lobby_id": lobby_id}
     response = requests.get(f'{api_url}get_stat_lobby/', data_check)
@@ -323,6 +320,17 @@ def get_total_stats(lobby_id):
         return in_order
     return False
 
+def end_game_numbers(lobby_id):
+    data_check = {"lobby_id": lobby_id}
+    active_games = requests.get(f'{api_url}gamenumber_active/', data_check)
+    game = list(active_games.json())    
+    data = {"lobby":game[0]["lobby"], "number":game[0]["number"], "status":1}
+    response = requests.put(f'{api_url}game_numbers/{game[0]["id"]}/', json=data)
+    print("CAMBIO DE STATUS:", response.content)
+    if response.status_code == 200:
+        return game[0]["number"]
+    return False
+
 def end_game_trivia_first(lobby_id):
     data_check = {"lobby_id": lobby_id}
     active_games = requests.get(f'{api_url}gametriviafirst_active/', data_check)
@@ -340,6 +348,22 @@ def end_game_trivia_first(lobby_id):
         "actual_question": game["actual_question"]
     }
     response = requests.put(f'{api_url}game_trivia_firsts/{game["id"]}/', json=data)
+    print("CAMBIO DE STATUS:", response.content)
+    if response.status_code == 200:
+        return True
+    return False
+
+def end_game_math(lobby_id):
+    data_check = {"lobby_id": lobby_id}
+    active_games = requests.get(f'{api_url}gamemath_active/', data_check)
+    game = list(active_games.json())    
+    data = {
+        "lobby": game[0]["lobby"], 
+        "status":1, 
+        "operation": game[0]["operation"],
+        "result": game[0]["result"]
+    }
+    response = requests.put(f'{api_url}game_maths/{game[0]["id"]}/', json=data)
     print("CAMBIO DE STATUS:", response.content)
     if response.status_code == 200:
         return True
@@ -437,9 +461,7 @@ def won_third_game(lobby_id,tel_id):
         "number_tries": user["number_tries"],
         "trivia_score": user["trivia_score"] 
     }
-    print("USER DATA:",data)
     response = requests.put(f'{api_url}users/{user_id}/', json=data)
-    print("RESTA DE INTENTOS:", response.content)
     if response.status_code == 200:
         return True
     return False
