@@ -46,3 +46,9 @@ def create_math_games_params():
             break
     return(numbers_in[0],str_ope)        
 
+def is_negative_number_digit(n: str) -> bool:
+     try:
+         int(n)
+         return True
+     except ValueError:
+         return False

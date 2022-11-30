@@ -302,7 +302,7 @@ def set_math_guess(item):
     error = False
     msg_error = ""
     try:
-        if sets.isnumeric():
+        if math_game.is_negative_number_digit(sets):
             game = api.guess_math_result(chat_id_str, int(sets))
             msg = ""
             if game == 1:
