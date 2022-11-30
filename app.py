@@ -283,7 +283,7 @@ def set_math(item):
             game = api.create_math(chat_id_str, operation, result)
             msg = ""
             if game == 1:
-                msg = f"Juego math iniciado >>> resolver:\n {operation}"
+                msg = f"Juego math iniciado >>> resolver:\n{operation}="
             elif game == 2:
                 msg = "Ya existe un juego activo."
             else:
@@ -337,7 +337,7 @@ def send_msg(chat_id, msg):
     resp = requests.get(to_url)
 
 def send_msg_md(chat_id, msg):
-    to_url = f'https://api.telegram.org/bot{TOKEN}/sendMessage?chat_id={chat_id}&text={msg}&parse_mode=Markdown'
+    to_url = f'https://api.telegram.org/bot{TOKEN}/sendMessage?chat_id={chat_id}&text={msg}&parse_mode=MarkdownV2'
     resp = requests.get(to_url)
 
 @app.route("/", methods = ['GET','POST'])
