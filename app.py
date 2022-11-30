@@ -4,7 +4,7 @@ import json
 import api
 import urllib
 import math_game
-from urllib.parse import urlencode
+
 
 TOKEN = '5716588187:AAH_kxlWI2GGSbmHEAANh53CGgvOfkBfNWM'
 api_url = 'https://apipds4.herokuapp.com/'
@@ -342,6 +342,7 @@ def set_math_guess(item):
 
 def send_msg(chat_id, msg):
     to_url = f'https://api.telegram.org/bot{TOKEN}/sendMessage?chat_id={chat_id}&text={msg}&parse_mode=HTML'
+    print(to_url)
     resp = requests.get(to_url)
 
 @app.route("/", methods = ['GET','POST'])
