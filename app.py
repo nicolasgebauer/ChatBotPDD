@@ -56,7 +56,7 @@ def is_game_trivia_first_active(item):
         set_guess_trivia_first(item)
 
 def is_game_math_active(item):
-    chat_id = item["chat_id"]
+    chat_id = item["chat"]["id"]
     chat_id_str = str(chat_id)
     if api.get_game_math_active(chat_id_str):
         set_math_guess(item)
